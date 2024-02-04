@@ -25,7 +25,7 @@ end)
 
 lib.addCommand('fix', {
     help = 'Repair current vehicle',
-    restricted = 'qbcore.god'
+    restricted = 'group.admin'
 }, function(source, args, raw)
     TriggerClientEvent('vehiclehandler:client:adminfix', source)
 end)
