@@ -283,7 +283,7 @@ if GetResourceState('ox_inventory') == 'started' then
         local doorIndex = backEngine and 5 or 4
 
         SetVehicleDoorOpen(veh, doorIndex, false, false)
-        exports.scully_emotemenu:playEmoteByCommand('mechanic2')
+        TaskPlayAnim(cache.ped, 'mini@repair', 'fixing_a_player', 8.0, 8.0, -1, 1, 0, false, false, false) -- This might be changed
 
         local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2}, 'hard'}, {'w', 'a', 's', 'd'})
         if success then
@@ -302,9 +302,9 @@ if GetResourceState('ox_inventory') == 'started' then
             end
             SetVehicleEngineOn(veh, true, false, false)
             SetVehicleDoorShut(veh, doorIndex, false)
-            exports.scully_emotemenu:cancelEmote()
+            ClearPedTasks(cache.ped) -- This might be changed
         else
-            exports.scully_emotemenu:cancelEmote()
+            ClearPedTasks(cache.ped) -- This might be changed
             lib.notify({
                 description = 'You have failed!',
                 position = 'top-right',
@@ -320,7 +320,7 @@ if GetResourceState('ox_inventory') == 'started' then
         local doorIndex = backEngine and 5 or 4
 
         SetVehicleDoorOpen(veh, doorIndex, false, false)
-        exports.scully_emotemenu:playEmoteByCommand('mechanic2')
+        TaskPlayAnim(cache.ped, 'mini@repair', 'fixing_a_player', 8.0, 8.0, -1, 1, 0, false, false, false) -- This might be changed
 
         local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2}, 'hard'}, {'w', 'a', 's', 'd'})
         if success then
@@ -343,9 +343,9 @@ if GetResourceState('ox_inventory') == 'started' then
             SetVehicleFixed(veh)
             SetVehicleEngineOn(veh, true, false, false)
             SetVehicleDoorShut(veh, doorIndex, false)
-            exports.scully_emotemenu:cancelEmote()
+            ClearPedTasks(cache.ped) -- This might be changed
         else
-            exports.scully_emotemenu:cancelEmote()
+            ClearPedTasks(cache.ped) -- This might be changed
             lib.notify({
                 description = 'You have failed!',
                 position = 'top-right',
