@@ -283,7 +283,8 @@ if GetResourceState('ox_inventory') == 'started' then
         local doorIndex = backEngine and 5 or 4
 
         SetVehicleDoorOpen(veh, doorIndex, false, false)
-        TaskPlayAnim(cache.ped, 'mini@repair', 'fixing_a_player', 8.0, 8.0, -1, 1, 0, false, false, false) -- This might be changed
+        lib.requestAnimDict('mini@repair')
+        TaskPlayAnim(cache.ped, 'mini@repair', 'fixing_a_player', 2.0, 2.0, -1, 1, 0, false, false, false) -- This might be changed
 
         local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2}, 'hard'}, {'w', 'a', 's', 'd'})
         if success then
@@ -320,7 +321,8 @@ if GetResourceState('ox_inventory') == 'started' then
         local doorIndex = backEngine and 5 or 4
 
         SetVehicleDoorOpen(veh, doorIndex, false, false)
-        TaskPlayAnim(cache.ped, 'mini@repair', 'fixing_a_player', 8.0, 8.0, -1, 1, 0, false, false, false) -- This might be changed
+        lib.requestAnimDict('mini@repair')
+        TaskPlayAnim(cache.ped, 'mini@repair', 'fixing_a_player', 2.0, 2.0, -1, 1, 0, false, false, false) -- This might be changed
 
         local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2}, 'hard'}, {'w', 'a', 's', 'd'})
         if success then
