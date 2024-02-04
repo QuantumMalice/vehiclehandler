@@ -177,7 +177,7 @@ if GetResourceState('ox_inventory') == 'started' then
         if lib.progressCircle({
             duration = math.random(10000, 20000),
             position = 'middle',
-            label = 'Limpiando el vehículo',
+            label = 'Cleaning the vehicle',
             useWhileDead = false,
             canCancel = true,
             disable = {
