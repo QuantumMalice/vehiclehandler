@@ -25,7 +25,21 @@ end)
 
 lib.addCommand('fix', {
     help = 'Repair current vehicle',
-    restricted = 'group.admin'
+    restricted = 'qbcore.god'
 }, function(source, args, raw)
     TriggerClientEvent('vehiclehandler:client:adminfix', source)
 end)
+
+-- Items
+if GetResourceState('ox_inventory') == 'started' then
+    RegisterNetEvent('vehiclehandler:removeItem', function(item)
+        local src = source
+        exports.ox_inventory:RemoveItem(src, item, 1)
+    end)
+
+    RegisterNetEvent('vehiclehandler:server:removewashingkit', function(veh)
+        local src = source
+        exports.ox_inventory:RemoveItem(src, 'cleaningkit', 1)
+        TriggerClientEvent('vehiclehandler:client:SyncWash', -1, veh)
+    end)
+end

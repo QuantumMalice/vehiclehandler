@@ -51,7 +51,7 @@ end
 function Utils.Vehicle.Repair(veh, script)
     lib.callback('vehiclehandler:server:sync', -1, function()
         SetVehicleUndriveable(veh, false)
-        SetVehicleEngineHealth(veh, 1000,0)
+        SetVehicleEngineHealth(veh, 1000.0)
         SetVehiclePetrolTankHealth(veh, 1000.0)
         SetVehicleBodyHealth(veh, 1000.0)
         ResetVehicleWheels(veh, true)
@@ -68,8 +68,8 @@ function Utils.Vehicle.Repair(veh, script)
             SetVehicleFuelLevel(veh, 100.0)
             DecorSetFloat(veh, '_FUEL_LEVEL', GetVehicleFuelLevel(vehicle))
         end
-        
-        SetVehicleEngineOn(veh, true, true)
+
+        SetVehicleEngineOn(veh, true, true, false)
     end)
 end
 

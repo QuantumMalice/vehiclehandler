@@ -1,5 +1,5 @@
 return {
-    units = 'mph' ,         -- (mph, kmh)
+    units = 'kmh' ,         -- (mph, kmh)
     threshold = {
         health = 50.0,      -- Health difference needed to break off wheel (LastHealth - CurrentHealth)
         speed = 50.0,       -- Speed difference needed to trigger collision events (LastSpeed - CurrentSpeed)

@@ -29,7 +29,7 @@ local function startThreads()
                     torqueReduction = false
                     break
                 end
-    
+
                 Wait(1)
             end
 
@@ -126,7 +126,7 @@ local function startThreads()
 
             Wait(100)
         end
-        
+
         listening, airborne, torqueReduction = false, false, false
         speedBuffer, healthBuffer, bodyBuffer, roll = {0.0,0.0}, {0.0,0.0}, {0.0,0.0}, 0.0
     end)
@@ -169,3 +169,301 @@ RegisterNetEvent('vehiclehandler:client:adminfix', function()
         Utils.Vehicle.Repair(Vehicle:getEntity(), fuelscript)
     end
 end)
+
+-- Items
+if GetResourceState('ox_inventory') == 'started' then
+    -- Cleaning
+    local function CleanVehicle(veh)
+        if lib.progressCircle({
+            duration = math.random(10000, 20000),
+            position = 'middle',
+            label = 'Limpiando el vehículo',
+            useWhileDead = false,
+            canCancel = true,
+            disable = {
+                move = true,
+                car = true,
+                combat = false,
+                mouse = false,
+            },
+            anim = {
+                scenario = 'WORLD_HUMAN_MAID_CLEAN',
+            },
+        }) then
+            lib.notify({
+                description = 'Vehicle cleaned!',
+                position = 'top-right',
+                icon = 'soap',
+                type = 'success',
+            })
+            SetVehicleDirtLevel(veh, 0.1)
+            SetVehicleUndriveable(veh, false)
+            WashDecalsFromVehicle(veh, 1.0)
+            TriggerServerEvent('vehiclehandler:server:removewashingkit', veh)
+        else
+            lib.notify({
+                description = 'Cleaning aborted!',
+                position = 'top-right',
+                icon = 'soap',
+                type = 'error',
+            })
+        end
+    end
+
+    RegisterNetEvent('vehiclehandler:client:SyncWash', function(veh)
+        SetVehicleDirtLevel(veh, 0.1)
+        SetVehicleUndriveable(veh, false)
+        WashDecalsFromVehicle(veh, 1.0)
+    end)
+
+    RegisterNetEvent('vehiclehandler:client:CleanVehicle', function()
+        if not cache.ped then return end
+        local pos = GetEntityCoords(cache.ped)
+        local veh = lib.getClosestVehicle(pos, 3.0, true)
+        if veh ~= nil and veh ~= 0 then
+            local vehpos = GetEntityCoords(veh)
+            if #(pos - vehpos) < 3.0 and not IsPedInAnyVehicle(cache.ped, false) then
+                CleanVehicle(veh)
+            end
+        else
+            lib.notify({
+                description = 'You are not near a vehicle!',
+                position = 'top-right',
+                icon = 'toolbox',
+                type = 'error',
+            })
+        end
+    end)
+
+    -- Repairkits
+    BackEngineVehicles = {
+        [`ninef`] = true,
+        [`adder`] = true,
+        [`vagner`] = true,
+        [`t20`] = true,
+        [`infernus`] = true,
+        [`zentorno`] = true,
+        [`reaper`] = true,
+        [`comet2`] = true,
+        [`jester`] = true,
+        [`jester2`] = true,
+        [`cheetah`] = true,
+        [`cheetah2`] = true,
+        [`prototipo`] = true,
+        [`turismor`] = true,
+        [`pfister811`] = true,
+        [`ardent`] = true,
+        [`nero`] = true,
+        [`nero2`] = true,
+        [`tempesta`] = true,
+        [`vacca`] = true,
+        [`bullet`] = true,
+        [`osiris`] = true,
+        [`entityxf`] = true,
+        [`turismo2`] = true,
+        [`fmj`] = true,
+        [`re7b`] = true,
+        [`tyrus`] = true,
+        [`italigtb`] = true,
+        [`penetrator`] = true,
+        [`monroe`] = true,
+        [`ninef2`] = true,
+        [`stingergt`] = true,
+        [`surfer`] = true,
+        [`surfer2`] = true,
+        [`comet3`] = true,
+    }
+
+    local function IsBackEngine(vehModel)
+        if BackEngineVehicles[vehModel] then return true else return false end
+    end
+
+    local function RepairVehicle(veh)
+        local backEngine = IsBackEngine(GetEntityModel(veh))
+        local doorIndex = backEngine and 5 or 4
+
+        SetVehicleDoorOpen(veh, doorIndex, false, false)
+        exports.scully_emotemenu:playEmoteByCommand('mechanic2')
+
+        local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2}, 'hard'}, {'w', 'a', 's', 'd'})
+        if success then
+            TriggerServerEvent('vehiclehandler:removeItem', "repairkit")
+            lib.notify({
+                description = 'Vehicle repaired!',
+                position = 'top-right',
+                icon = 'toolbox',
+                type = 'success',
+            })
+            SetVehicleUndriveable(veh, false)
+            SetVehicleEngineHealth(veh, 500.0)
+            for i = 0, 5 do
+                SetVehicleTyreFixed(veh, i)
+                SetVehicleWheelHealth(veh, i, 1000.0)
+            end
+            SetVehicleEngineOn(veh, true, false, false)
+            SetVehicleDoorShut(veh, doorIndex, false)
+            exports.scully_emotemenu:cancelEmote()
+        else
+            exports.scully_emotemenu:cancelEmote()
+            lib.notify({
+                description = 'You have failed!',
+                position = 'top-right',
+                icon = 'toolbox',
+                type = 'error',
+            })
+            SetVehicleDoorShut(veh, doorIndex, false)
+        end
+    end
+
+    local function RepairVehicleFull(veh)
+        local backEngine = IsBackEngine(GetEntityModel(veh))
+        local doorIndex = backEngine and 5 or 4
+
+        SetVehicleDoorOpen(veh, doorIndex, false, false)
+        exports.scully_emotemenu:playEmoteByCommand('mechanic2')
+
+        local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2}, 'hard'}, {'w', 'a', 's', 'd'})
+        if success then
+            TriggerServerEvent('vehiclehandler:removeItem', "advancedrepairkit")
+            lib.notify({
+                description = 'Vehicle repaired!',
+                position = 'top-right',
+                icon = 'toolbox',
+                type = 'success',
+            })
+            SetVehicleUndriveable(veh, false)
+            SetVehicleEngineHealth(veh, 1000.0)
+            SetVehiclePetrolTankHealth(veh, 1000.0)
+            SetVehicleBodyHealth(veh, 1000.0)
+            ResetVehicleWheels(veh, true)
+            for i = 0, 5 do
+                SetVehicleTyreFixed(veh, i)
+                SetVehicleWheelHealth(veh, i, 1000.0)
+            end
+            SetVehicleFixed(veh)
+            SetVehicleEngineOn(veh, true, false, false)
+            SetVehicleDoorShut(veh, doorIndex, false)
+            exports.scully_emotemenu:cancelEmote()
+        else
+            exports.scully_emotemenu:cancelEmote()
+            lib.notify({
+                description = 'You have failed!',
+                position = 'top-right',
+                icon = 'toolbox',
+                type = 'error',
+            })
+            SetVehicleDoorShut(veh, doorIndex, false)
+        end
+    end
+
+    RegisterNetEvent('vehiclehandler:client:RepairVehicle', function()
+        if not cache.ped then return end
+        local pos = GetEntityCoords(cache.ped)
+        local veh = lib.getClosestVehicle(pos, 10.0, true)
+        local engineHealth = GetVehicleEngineHealth(veh)
+        if veh ~= nil and veh ~= 0 and engineHealth > -1.0 then -- Check if vehicle is destroyed
+            if veh ~= nil and veh ~= 0 and engineHealth < 500 then
+                local vehpos = GetEntityCoords(veh)
+                if #(pos - vehpos) < 5.0 and not IsPedInAnyVehicle(cache.ped, false) then
+                    local drawpos = GetOffsetFromEntityInWorldCoords(veh, 0, 2.5, 0)
+                    if (IsBackEngine(GetEntityModel(veh))) then
+                        drawpos = GetOffsetFromEntityInWorldCoords(veh, 0, -2.5, 0)
+                    end
+                    if #(pos - drawpos) < 2.0 and not IsPedInAnyVehicle(cache.ped, false) then
+                        RepairVehicle(veh)
+                    end
+                else
+                    if #(pos - vehpos) > 4.9 then
+                        lib.notify({
+                            description = 'You are too far from the vehicle!',
+                            position = 'top-right',
+                            icon = 'toolbox',
+                            type = 'error',
+                        })
+                    else
+                        lib.notify({
+                            description = 'The vehicle\'s engine cannot be repaired from the interior!',
+                            position = 'top-right',
+                            icon = 'toolbox',
+                            type = 'error',
+                        })
+                    end
+                end
+            else
+                if veh == nil or veh == 0 then
+                    lib.notify({
+                        description = 'You are not near a vehicle!',
+                        position = 'top-right',
+                        icon = 'toolbox',
+                        type = 'error',
+                    })
+                else
+                    lib.notify({
+                        description = 'The vehicle is fine and needs better tools!',
+                        position = 'top-right',
+                        icon = 'toolbox',
+                        type = 'error',
+                    })
+                end
+            end
+        else
+            lib.notify({
+                description = 'This vehicle is destroyed and cannot be repaired',
+                position = 'top-right',
+                icon = 'toolbox',
+                type = 'error',
+            })
+        end
+    end)
+
+    RegisterNetEvent('vehiclehandler:client:RepairVehicleFull', function()
+        if not cache.ped then return end
+        local pos = GetEntityCoords(cache.ped)
+        local veh = lib.getClosestVehicle(pos, 10.0, true)
+        local engineHealth = GetVehicleEngineHealth(veh)
+        if veh ~= nil and veh ~= 0 and engineHealth > -1.0 then -- Check if vehicle is destroyed
+            if veh ~= nil and veh ~= 0 then
+                local vehpos = GetEntityCoords(veh)
+                if #(pos - vehpos) < 5.0 and not IsPedInAnyVehicle(cache.ped, false) then
+                    local drawpos = GetOffsetFromEntityInWorldCoords(veh, 0, 2.5, 0)
+                    if (IsBackEngine(GetEntityModel(veh))) then
+                        drawpos = GetOffsetFromEntityInWorldCoords(veh, 0, -2.5, 0)
+                    end
+                    if #(pos - drawpos) < 2.0 and not IsPedInAnyVehicle(cache.ped, false) then
+                        RepairVehicleFull(veh)
+                    end
+                else
+                    if #(pos - vehpos) > 4.9 then
+                        lib.notify({
+                            description = 'You are too far from the vehicle!',
+                            position = 'top-right',
+                            icon = 'toolbox',
+                            type = 'error',
+                        })
+                    else
+                        lib.notify({
+                            description = 'The vehicle\'s engine cannot be repaired from the interior!',
+                            position = 'top-right',
+                            icon = 'toolbox',
+                            type = 'error',
+                        })
+                    end
+                end
+            else
+                lib.notify({
+                    description = 'You are not near a vehicle!',
+                    position = 'top-right',
+                    icon = 'toolbox',
+                    type = 'error',
+                })
+            end
+        else
+            lib.notify({
+                description = 'This vehicle is destroyed and cannot be repaired',
+                position = 'top-right',
+                icon = 'toolbox',
+                type = 'error',
+            })
+        end
+    end)
+end
