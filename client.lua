@@ -48,10 +48,12 @@ local function startThreads()
             speedBuffer[1] = GetEntitySpeed(vehEntity) * speedunit
 
             -- Driveability handler (health, fuel)
-            local fuelLevel = GetVehicleFuelLevel(vehEntity)
-            if healthBuffer[1] <= 0 or fuelLevel <= 6.4 then
-                if IsVehicleDriveable(vehEntity, true) then
-                    SetVehicleUndriveable(vehEntity, true)
+            if GetResourceState('ox_fuel') ~= 'started' then
+                local fuelLevel = GetVehicleFuelLevel(vehEntity)
+                if healthBuffer[1] <= 0 or fuelLevel <= 6.4 then
+                    if IsVehicleDriveable(vehEntity, true) then
+                        SetVehicleUndriveable(vehEntity, true)
+                    end
                 end
             end
 
@@ -284,7 +286,7 @@ if GetResourceState('ox_inventory') == 'started' then
 
         SetVehicleDoorOpen(veh, doorIndex, false, false)
         lib.requestAnimDict('mini@repair')
-        TaskPlayAnim(cache.ped, 'mini@repair', 'fixing_a_player', 2.0, 2.0, -1, 1, 0, false, false, false) -- This might be changed
+        TaskPlayAnim(cache.ped, 'mini@repair', 'fixing_a_player', 2.0, 2.0, -1, 1, 0, false, false, false)
 
         local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2}, 'hard'}, {'w', 'a', 's', 'd'})
         if success then
@@ -303,9 +305,9 @@ if GetResourceState('ox_inventory') == 'started' then
             end
             SetVehicleEngineOn(veh, true, false, false)
             SetVehicleDoorShut(veh, doorIndex, false)
-            ClearPedTasks(cache.ped) -- This might be changed
+            ClearPedTasks(cache.ped)
         else
-            ClearPedTasks(cache.ped) -- This might be changed
+            ClearPedTasks(cache.ped)
             lib.notify({
                 description = 'You have failed!',
                 position = 'top-right',
@@ -322,7 +324,7 @@ if GetResourceState('ox_inventory') == 'started' then
 
         SetVehicleDoorOpen(veh, doorIndex, false, false)
         lib.requestAnimDict('mini@repair')
-        TaskPlayAnim(cache.ped, 'mini@repair', 'fixing_a_player', 2.0, 2.0, -1, 1, 0, false, false, false) -- This might be changed
+        TaskPlayAnim(cache.ped, 'mini@repair', 'fixing_a_player', 2.0, 2.0, -1, 1, 0, false, false, false)
 
         local success = lib.skillCheck({'easy', 'easy', {areaSize = 60, speedMultiplier = 2}, 'hard'}, {'w', 'a', 's', 'd'})
         if success then
@@ -345,9 +347,9 @@ if GetResourceState('ox_inventory') == 'started' then
             SetVehicleFixed(veh)
             SetVehicleEngineOn(veh, true, false, false)
             SetVehicleDoorShut(veh, doorIndex, false)
-            ClearPedTasks(cache.ped) -- This might be changed
+            ClearPedTasks(cache.ped)
         else
-            ClearPedTasks(cache.ped) -- This might be changed
+            ClearPedTasks(cache.ped)
             lib.notify({
                 description = 'You have failed!',
                 position = 'top-right',
