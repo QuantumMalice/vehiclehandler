@@ -9,10 +9,7 @@ if GetResourceState('ox_inventory') == 'started' then
 
     exports('cleaningkit', function(event, item, inventory, slot, data)
         if event == 'usingItem' then
-            local src = inventory.id
-            if not src then return false end
-
-            local success = lib.callback.await('vehiclehandler:basicwash', src)
+            local success = lib.callback.await('vehiclehandler:basicwash', inventory.id)
             if success then return end
 
             return false
@@ -21,10 +18,7 @@ if GetResourceState('ox_inventory') == 'started' then
 
     exports('tirekit', function(event, item, inventory, slot, data)
         if event == 'usingItem' then
-            local src = inventory.id
-            if not src then return false end
-
-            local success = lib.callback.await('vehiclehandler:basicfix', src, 'tirekit')
+            local success = lib.callback.await('vehiclehandler:basicfix', inventory.id, 'tirekit')
             if success then return end
 
             return false
@@ -33,10 +27,7 @@ if GetResourceState('ox_inventory') == 'started' then
 
     exports('repairkit', function(event, item, inventory, slot, data)
         if event == 'usingItem' then
-            local src = inventory.id
-            if not src then return false end
-
-            local success = lib.callback.await('vehiclehandler:basicfix', src, 'smallkit')
+            local success = lib.callback.await('vehiclehandler:basicfix', inventory.id, 'smallkit')
             if success then return end
 
             return false
@@ -45,10 +36,7 @@ if GetResourceState('ox_inventory') == 'started' then
 
     exports('advancedrepairkit', function(event, item, inventory, slot, data)
         if event == 'usingItem' then
-            local src = inventory.id
-            if not src then return false end
-
-            local success = lib.callback.await('vehiclehandler:basicfix', src, 'bigkit')
+            local success = lib.callback.await('vehiclehandler:basicfix', inventory.id, 'bigkit')
             if success then return end
 
             return false

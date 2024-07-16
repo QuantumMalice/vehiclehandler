@@ -6,9 +6,9 @@ if GetResourceState('ox_inventory') == 'started' then
     if not ox_inv then print(msg_inv) return end
 end
 
-local Class = require 'modules.handler'
+---@class Handler : OxClass
+local Handler = require 'modules.handler'
 local Settings = lib.load('data.vehicle')
-local Handler = nil
 
 local function startThreads(vehicle)
     if not vehicle then return end
@@ -164,6 +164,6 @@ lib.callback.register('vehiclehandler:basicfix', function(fixtype)
 end)
 
 CreateThread(function()
-    Handler = Class:new()
+    Handler = Handler:new()
     startThreads(cache.vehicle)
 end)

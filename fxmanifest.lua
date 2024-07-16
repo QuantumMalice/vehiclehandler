@@ -5,21 +5,14 @@ lua54       'yes'
 name        'vehiclehandler'
 description 'Collision/damage handling for FiveM.'
 author      'QuantumMalice'
-version     '1.1.2'
+version     '1.2.0'
 
 files {
-    'data/*.lua',
-    'modules/handler.lua',
+    'data/progress.lua',
+    'data/vehicle.lua',
+    'modules/handler.lua'
 }
 
-shared_scripts {
-    '@ox_lib/init.lua',
-}
-
-client_scripts {
-    'client.lua',
-}
-
-server_scripts {
-    'server.lua',
-}
+shared_script '@ox_lib/init.lua'
+client_script 'client.lua'
+server_script 'server.lua'
