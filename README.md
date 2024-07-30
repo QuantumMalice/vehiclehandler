@@ -1,4 +1,4 @@
-![Main Banner](https://cdn.discordapp.com/attachments/688864735646580762/1178975479861104710/QM-main_2.png?ex=6690e8fa&is=668f977a&hm=fb8c29b6587b5f2571120960f5f85564912b1284f0f0341ca5aef2df3f6c72f2&)
+![Main Banner](https://i.imgur.com/hryKQ1w.png)
 
 ## __Features:__
 ➢ Tire loss on impact <br>
