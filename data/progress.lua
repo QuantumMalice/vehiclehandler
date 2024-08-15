@@ -1,7 +1,7 @@
 return {
     ['cleankit'] = {
         label = "Cleaning vehicle",
-        duration = math.random(10000, 20000),
+        duration = 15000,
         position = 'bottom',
         useWhileDead = false,
         canCancel = true,
@@ -14,7 +14,7 @@ return {
     },
     ['tirekit'] = {
         label = "Repairing tires",
-        duration = math.random(10000, 20000),
+        duration = 15000,
         position = 'bottom',
         useWhileDead = false,
         canCancel = true,
@@ -32,7 +32,7 @@ return {
     },
     ['smallkit'] = {
         label = "Repairing vehicle",
-        duration = math.random(15000, 20000),
+        duration = 20000,
         position = 'bottom',
         useWhileDead = false,
         canCancel = true,
@@ -49,7 +49,7 @@ return {
     },
     ['bigkit'] = {
         label = "Repairing vehicle",
-        duration = math.random(25000, 30000),
+        duration = 30000,
         position = 'bottom',
         useWhileDead = false,
         canCancel = true,
