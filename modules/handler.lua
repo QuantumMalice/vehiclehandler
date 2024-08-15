@@ -125,6 +125,8 @@ function Handler:fixTire(vehicle, coords)
 
         return success
     end
+
+    return false
 end
 
 function Handler:fixVehicle(vehicle, coords, fixtype)
@@ -184,6 +186,8 @@ function Handler:fixVehicle(vehicle, coords, fixtype)
             type = 'error'
         })
     end
+
+    return false
 end
 
 function Handler:basicfix(fixtype)
@@ -199,8 +203,6 @@ function Handler:basicfix(fixtype)
     elseif fixtype == 'smallkit' or fixtype == 'bigkit' then
         return self:fixVehicle(vehicle, coords, fixtype)
     end
-
-    return false
 end
 
 function Handler:basicwash()
