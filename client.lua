@@ -1,8 +1,8 @@
-local ox_lib, msg_lib = lib.checkDependency('ox_lib', '3.17.0')
+local ox_lib, msg_lib = lib.checkDependency('ox_lib', '3.24.0')
 if not ox_lib then print(msg_lib) return end
 
 if GetResourceState('ox_inventory') == 'started' then
-    local ox_inv, msg_inv = lib.checkDependency('ox_inventory', '2.39.1')
+    local ox_inv, msg_inv = lib.checkDependency('ox_inventory', '2.41.0')
     if not ox_inv then print(msg_inv) return end
 end
 
@@ -10,7 +10,7 @@ end
 local Handler = require 'modules.handler'
 local Settings = lib.load('data.vehicle')
 
-local function startThreads(vehicle)
+local function startThread(vehicle)
     if not vehicle then return end
     if not Handler or Handler:isActive() then return end
 
@@ -126,14 +126,14 @@ local function startThreads(vehicle)
         -- Retrigger thread if admin spawns a new vehicle while in one
         if cache.vehicle and cache.seat == -1 then
             if Handler:isLimited() then Handler:setLimited(false) end
-            startThreads(cache.vehicle)
+            startThread(cache.vehicle)
         end
     end)
 end
 
 lib.onCache('seat', function(seat)
     if seat == -1 then
-        startThreads(cache.vehicle)
+        startThread(cache.vehicle)
     end
 end)
 
@@ -158,12 +158,11 @@ lib.callback.register('vehiclehandler:basicwash', function()
 end)
 
 lib.callback.register('vehiclehandler:basicfix', function(fixtype)
-    if not fixtype or type(fixtype) ~= 'string' then return end
     if not Handler then return end
     return Handler:basicfix(fixtype)
 end)
 
 CreateThread(function()
     Handler = Handler:new()
-    startThreads(cache.vehicle)
+    startThread(cache.vehicle)
 end)
