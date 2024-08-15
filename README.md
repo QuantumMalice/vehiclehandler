@@ -8,9 +8,6 @@
 ➢ Disables controls while airborne/flipped <br>
 ➢ Repair/Wash item integration (clean, tire, engine) <br>
 
-*Idle -* `0.0ms` <br>
-*Driving -* `0.0ms ~ 0.02ms` <br>
-
 ## __Dependencies:__
 * [ox_lib](https://github.com/overextended/ox_lib)
 * [ox_inventory](https://github.com/overextended/ox_inventory) *(Optional)*
@@ -66,7 +63,7 @@
         close = true,
         description = "A nice toolbox with stuff to repair your vehicle",
         client = {
-            image = "advancedkit.png",
+            image = "advancedrepairkit.png",
         },
         server = {
             export = 'vehiclehandler.advancedrepairkit',
