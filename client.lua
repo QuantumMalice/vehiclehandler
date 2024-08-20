@@ -22,7 +22,7 @@ local function startThread(vehicle)
     local speedBuffer, healthBuffer, bodyBuffer, roll, airborne = {0.0,0.0}, {0.0,0.0}, {0.0,0.0}, 0.0, false
 
     CreateThread(function()
-        while (cache.vehicle == vehicle) and (cache.seat == -1) do
+        while (cache.vehicle == vehicle) and (Handler:getSeat() == -1) do
 
             -- Retrieve latest vehicle data
             bodyBuffer[1] = GetVehicleBodyHealth(vehicle)
@@ -43,7 +43,7 @@ local function startThread(vehicle)
                     Handler:setLimited(true)
 
                     CreateThread(function()
-                        while (cache.vehicle == vehicle) and (healthBuffer[1] < 500) do
+                        while (cache.vehicle == vehicle) and (Handler:getSeat() == -1) and (healthBuffer[1] < 500) do
                             local newtorque = (healthBuffer[1] + 500) / 1100
                             SetVehicleCheatPowerIncrease(vehicle, newtorque)
                             Wait(1)
@@ -64,7 +64,23 @@ local function startThread(vehicle)
                 end
 
                 if (roll > 75.0 or roll < -75.0) or airborne then
-                    SetVehicleOutOfControl(vehicle, false, false)
+                    if Handler:canControl() then
+                        Handler:setControl(false)
+
+                        CreateThread(function()
+                            while not Handler:canControl() and Handler:getSeat() == -1 do
+                                DisableControlAction(2, 59, true) -- Disable left/right
+                                DisableControlAction(2, 60, true) -- Disable up/down
+                                Wait(1)
+                            end
+
+                            if not Handler:canControl() then Handler:setControl(true) end
+                        end)
+                    end
+                else
+                    if not Handler:canControl() then
+                        Handler:setControl(true)
+                    end
                 end
             end
 
@@ -132,29 +148,11 @@ local function startThread(vehicle)
 end
 
 lib.onCache('seat', function(seat)
+    Handler:setSeat(seat)
+
     if seat == -1 then
         startThread(cache.vehicle)
     end
-end)
-
-lib.callback.register('vehiclehandler:adminfuel', function(newlevel)
-    if not Handler or not Handler:isActive() then return end
-    return Handler:adminfuel(newlevel)
-end)
-
-lib.callback.register('vehiclehandler:adminwash', function()
-    if not Handler or not Handler:isActive() then return end
-    return Handler:adminwash()
-end)
-
-lib.callback.register('vehiclehandler:adminfix', function()
-    if not Handler or not Handler:isActive() then return end
-    return Handler:adminfix()
-end)
-
-lib.callback.register('vehiclehandler:basicwash', function()
-    if not Handler then return end
-    return Handler:basicwash()
 end)
 
 lib.callback.register('vehiclehandler:basicfix', function(fixtype)
@@ -162,7 +160,29 @@ lib.callback.register('vehiclehandler:basicfix', function(fixtype)
     return Handler:basicfix(fixtype)
 end)
 
+lib.callback.register('vehiclehandler:basicwash', function()
+    if not Handler then return end
+    return Handler:basicwash()
+end)
+
+lib.callback.register('vehiclehandler:adminfix', function()
+    if not Handler or not Handler:isActive() then return end
+    return Handler:adminfix()
+end)
+
+lib.callback.register('vehiclehandler:adminwash', function()
+    if not Handler or not Handler:isActive() then return end
+    return Handler:adminwash()
+end)
+
+lib.callback.register('vehiclehandler:adminfuel', function(newlevel)
+    if not Handler or not Handler:isActive() then return end
+    return Handler:adminfuel(newlevel)
+end)
+
 CreateThread(function()
-    Handler = Handler:new()
-    startThread(cache.vehicle)
+    Handler = Handler:new(cache.seat)
+    if cache.seat == -1 then
+        startThread(cache.vehicle)
+    end
 end)
