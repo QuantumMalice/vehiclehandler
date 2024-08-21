@@ -15,11 +15,11 @@ local BONES <const> = {
 ---@diagnostic disable-next-line: assign-type-mismatch
 local Handler = lib.class('vehiclehandler')
 
-function Handler:constructor(seat)
+function Handler:constructor()
     self:setActive(false)
     self:setLimited(false)
     self:setControl(true)
-    self:setSeat(seat)
+    self:setSeat(false)
     self.private.oxfuel = GetResourceState('ox_fuel') == 'started' and true or false
     self.private.units = Settings.units == 'mph' and 2.23694 or 3.6
 end

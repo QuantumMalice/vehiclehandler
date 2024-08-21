@@ -181,8 +181,10 @@ lib.callback.register('vehiclehandler:adminfuel', function(newlevel)
 end)
 
 CreateThread(function()
-    Handler = Handler:new(cache.seat)
+    Handler = Handler:new()
+
     if cache.seat == -1 then
+        Handler:setSeat(cache.seat)
         startThread(cache.vehicle)
     end
 end)
