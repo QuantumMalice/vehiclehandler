@@ -22,7 +22,7 @@ local function startThread(vehicle)
     local speedBuffer, healthBuffer, bodyBuffer, roll, airborne = {0.0,0.0}, {0.0,0.0}, {0.0,0.0}, 0.0, false
 
     CreateThread(function()
-        while (cache.vehicle == vehicle) and (Handler:getSeat() == -1) do
+        while (cache.vehicle == vehicle) and (cache.seat == -1) do
 
             -- Retrieve latest vehicle data
             bodyBuffer[1] = GetVehicleBodyHealth(vehicle)
@@ -43,7 +43,7 @@ local function startThread(vehicle)
                     Handler:setLimited(true)
 
                     CreateThread(function()
-                        while (cache.vehicle == vehicle) and (Handler:getSeat() == -1) and (healthBuffer[1] < 500) do
+                        while (cache.vehicle == vehicle) and (cache.seat == -1) and (healthBuffer[1] < 500) do
                             local newtorque = (healthBuffer[1] + 500) / 1100
                             SetVehicleCheatPowerIncrease(vehicle, newtorque)
                             Wait(1)
@@ -68,7 +68,7 @@ local function startThread(vehicle)
                         Handler:setControl(false)
 
                         CreateThread(function()
-                            while not Handler:canControl() and Handler:getSeat() == -1 do
+                            while not Handler:canControl() and cache.seat == -1 do
                                 DisableControlAction(2, 59, true) -- Disable left/right
                                 DisableControlAction(2, 60, true) -- Disable up/down
                                 Wait(1)
@@ -148,8 +148,6 @@ local function startThread(vehicle)
 end
 
 lib.onCache('seat', function(seat)
-    Handler:setSeat(seat)
-
     if seat == -1 then
         startThread(cache.vehicle)
     end
@@ -184,7 +182,6 @@ CreateThread(function()
     Handler = Handler:new()
 
     if cache.seat == -1 then
-        Handler:setSeat(cache.seat)
         startThread(cache.vehicle)
     end
 end)

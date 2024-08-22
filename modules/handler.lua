@@ -11,7 +11,7 @@ local BONES <const> = {
 }
 
 ---@class Handler : OxClass
----@field private private { active: boolean, limited: boolean, control: boolean, oxfuel: boolean, units: number, seat: number|false }
+---@field private private { active: boolean, limited: boolean, control: boolean, oxfuel: boolean, units: number }
 ---@diagnostic disable-next-line: assign-type-mismatch
 local Handler = lib.class('vehiclehandler')
 
@@ -19,7 +19,6 @@ function Handler:constructor()
     self:setActive(false)
     self:setLimited(false)
     self:setControl(true)
-    self:setSeat(false)
     self.private.oxfuel = GetResourceState('ox_fuel') == 'started' and true or false
     self.private.units = Settings.units == 'mph' and 2.23694 or 3.6
 end
@@ -33,8 +32,6 @@ function Handler:canControl() return self.private.control end
 function Handler:isFuelOx() return self.private.oxfuel end
 
 function Handler:getUnits() return self.private.units end
-
-function Handler:getSeat() return self.private.seat end
 
 function Handler:isValid()
     if not cache.ped then return false end
@@ -78,14 +75,6 @@ end
 function Handler:setControl(state)
     if state ~= nil and type(state) == 'boolean' then
         self.private.control = state
-    end
-end
-
-function Handler:setSeat(seat)
-    if seat ~= nil then
-        if type(seat) == 'number' or seat == false then
-            self.private.seat = seat
-        end
     end
 end
 
