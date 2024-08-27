@@ -11,7 +11,7 @@ local BONES <const> = {
 }
 
 ---@class Handler : OxClass
----@field private private { active: boolean, limited: boolean, control: boolean, oxfuel: boolean, units: number }
+---@field private private { active: boolean, limited: boolean, control: boolean, class: number | false, oxfuel: boolean, units: number }
 ---@diagnostic disable-next-line: assign-type-mismatch
 local Handler = lib.class('vehiclehandler')
 
@@ -28,6 +28,8 @@ function Handler:isActive() return self.private.active end
 function Handler:isLimited() return self.private.limited end
 
 function Handler:canControl() return self.private.control end
+
+function Handler:getClass() return self.private.class end
 
 function Handler:isFuelOx() return self.private.oxfuel end
 
@@ -63,6 +65,12 @@ end
 function Handler:setActive(state)
     if state ~= nil and type(state) == 'boolean' then
         self.private.active = state
+
+        if state then
+            self.private.class = GetVehicleClass(cache.vehicle) or false
+        else
+            self.private.class = false
+        end
     end
 end
 
@@ -171,6 +179,8 @@ function Handler:fixVehicle(vehicle, coords, fixtype)
                 lib.callback('vehiclehandler:sync', false, function()
                     if fixtype == 'smallkit' then
                         SetVehicleEngineHealth(vehicle, 500.0)
+                        SetVehicleBodyHealth(vehicle, 500.0)
+                        SetVehiclePetrolTankHealth(vehicle, 500.0)
                     elseif fixtype == 'bigkit' then
                         SetVehicleFixed(vehicle)
                     end
