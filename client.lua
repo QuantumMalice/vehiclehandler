@@ -29,9 +29,19 @@ local function startThread(vehicle)
             vehicleData['body'] = GetVehicleBodyHealth(vehicle)
             vehicleData['speed'] = GetEntitySpeed(vehicle) * units
 
+            -- Prevent negative engine health
+            if vehicleData['engine'] < 0 then
+                SetVehicleEngineHealth(cache.vehicle, 0.0)
+            end
+
+            -- Prevent negative body health
+            if vehicleData['body'] < 0 then
+                SetVehicleBodyHealth(cache.vehicle, 0.0)
+            end
+
             -- Driveability handler (health, fuel)
             local fuel = oxfuel and Entity(vehicle).state.fuel or GetVehicleFuelLevel(vehicle)
-            if vehicleData['engine'] <= 0 or fuel <= 6.4 then
+            if vehicleData['engine'] <= 0 or fuel <= 7 then
                 if IsVehicleDriveable(vehicle, true) then
                     SetVehicleUndriveable(vehicle, true)
                 end
@@ -83,7 +93,7 @@ local function startThread(vehicle)
                 end
             end
 
-            Wait(200)
+            Wait(300)
         end
 
         vehicleData = {['engine'] = 0, ['body'] = 0, ['speed'] = 0}
@@ -103,7 +113,7 @@ AddEventHandler('entityDamaged', function (victim, _, weapon, _)
 
     -- Damage handler
     local bodyDiff = vehicleData['body'] - GetVehicleBodyHealth(cache.vehicle)
-    if bodyDiff >= 1 then
+    if bodyDiff > 0 then
 
         -- Calculate latest damage
         local bodyDamage = bodyDiff * Settings.globalmultiplier * Settings.classmultiplier[Handler:getClass()]
@@ -112,18 +122,8 @@ AddEventHandler('entityDamaged', function (victim, _, weapon, _)
         -- Update engine health
         if newEngine ~= vehicleData['engine'] and newEngine > 0 then
             SetVehicleEngineHealth(cache.vehicle, newEngine)
-        elseif newEngine ~= 0 then
-            SetVehicleEngineHealth(cache.vehicle, 0.0) -- prevent negative engine health
-        end
-
-        -- Prevent negative body health
-        if vehicleData['body'] < 0 then
-            SetVehicleBodyHealth(cache.vehicle, 0.0)
-        end
-
-        -- Prevent negative tank health (explosion)
-        if GetVehiclePetrolTankHealth(cache.vehicle) < 0 then
-            SetVehiclePetrolTankHealth(cache.vehicle, 0.0)
+        else
+            SetVehicleEngineHealth(cache.vehicle, 0.0)
         end
     end
 
@@ -133,16 +133,17 @@ AddEventHandler('entityDamaged', function (victim, _, weapon, _)
 
         -- Handle wheel loss
         if Settings.breaktire then
-            if bodyDiff >= Settings.threshold.tire then
+            if bodyDiff >= Settings.threshold.health then
                 math.randomseed(GetGameTimer())
                 Handler:breakTire(cache.vehicle, math.random(0, 1))
             end
         end
 
-        -- Handle heavy impact
+        -- Handle heavy impact (disable vehicle)
         if speedDiff >= Settings.threshold.heavy then
             SetVehicleUndriveable(cache.vehicle, true)
-            SetVehicleEngineHealth(cache.vehicle, 0.0) -- Disable vehicle completely
+            SetVehicleEngineHealth(cache.vehicle, 0.0)
+            SetVehicleEngineOn(cache.vehicle, false, true, false)
         end
     end
 end)

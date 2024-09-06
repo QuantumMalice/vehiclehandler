@@ -91,11 +91,11 @@ function Handler:getEngineData(vehicle)
 
     local backengine = Settings.backengine[GetEntityModel(vehicle)]
     local distance = backengine and -2.5 or 2.5
-    local offset = GetOffsetFromEntityInWorldCoords(vehicle, 0, distance, 0)
     local index = backengine and 5 or 4
-    local health = GetVehicleEngineHealth(vehicle)
+    local offset = GetOffsetFromEntityInWorldCoords(vehicle, 0, distance, 0)
+    local engine = GetVehicleEngineHealth(vehicle)
 
-    return backengine, offset, index, health
+    return backengine, offset, index, engine
 end
 
 function Handler:breakTire(vehicle, index)
@@ -109,7 +109,7 @@ function Handler:breakTire(vehicle, index)
 
             lib.callback('vehiclehandler:sync', false, function()
                 SetVehicleTyreBurst(vehicle, index, true, 1000.0)
-                BreakOffVehicleWheel(vehicle, index, true, true, true, false)
+                BreakOffVehicleWheel(vehicle, index, false, true, true, false)
             end)
         end
     end
@@ -121,7 +121,6 @@ function Handler:fixTire(vehicle, coords)
     if found then
         local lastengine = GetVehicleEngineHealth(vehicle)
         local lastbody = GetVehicleBodyHealth(vehicle)
-        local lasttank = GetVehiclePetrolTankHealth(vehicle)
         local lastdirt = GetVehicleDirtLevel(vehicle)
         local success = false
 
@@ -134,7 +133,6 @@ function Handler:fixTire(vehicle, coords)
                 SetVehicleFixed(vehicle)
                 SetVehicleEngineHealth(vehicle, lastengine)
                 SetVehicleBodyHealth(vehicle, lastbody)
-                SetVehiclePetrolTankHealth(vehicle, lasttank)
                 SetVehicleDirtLevel(vehicle, lastdirt)
             end)
         end
@@ -148,9 +146,9 @@ function Handler:fixTire(vehicle, coords)
 end
 
 function Handler:fixVehicle(vehicle, coords, fixtype)
-    local backengine, offset, hoodindex, health = self:getEngineData(vehicle)
+    local backengine, offset, hoodindex, engine = self:getEngineData(vehicle)
 
-    if fixtype == 'smallkit' and health < 500 or fixtype == 'bigkit' and health < 1000 then
+    if fixtype == 'smallkit' and engine < 500 or fixtype == 'bigkit' and engine < 1000 then
         if #(coords - offset) < 2.0 then
             local success = false
 
@@ -179,8 +177,10 @@ function Handler:fixVehicle(vehicle, coords, fixtype)
                 lib.callback('vehiclehandler:sync', false, function()
                     if fixtype == 'smallkit' then
                         SetVehicleEngineHealth(vehicle, 500.0)
-                        SetVehicleBodyHealth(vehicle, 500.0)
-                        SetVehiclePetrolTankHealth(vehicle, 500.0)
+
+                        if GetVehicleBodyHealth(vehicle) < 500 then
+                            SetVehicleBodyHealth(vehicle, 500.0)
+                        end
                     elseif fixtype == 'bigkit' then
                         SetVehicleFixed(vehicle)
                     end
