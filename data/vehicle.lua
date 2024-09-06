@@ -1,60 +1,61 @@
 return {
-    units = 'mph' ,         -- (mph, kmh)
-    breaktire = true,       -- Enable/Disable breaking off vehicle wheel on impact
+    units = 'mph' ,             -- (mph, kmh)
+    breaktire = true,           -- Enable/Disable breaking off vehicle wheel on impact
     threshold = {
-        tire  = 50.0,       -- Health difference needed to break off wheel (LastHealth - CurrentHealth)
-        speed = 50.0,       -- Speed difference needed to trigger collision events (LastSpeed - CurrentSpeed)
-        heavy = 90.0,       -- Speed difference needed for a heavy collision event (LastSpeed - CurrentSpeed)
+        health = 50.0,          -- Health difference needed to break off wheel (LastHealth - CurrentHealth)
+        speed  = 50.0,          -- Speed difference needed to break off wheel (LastSpeed - CurrentSpeed)
+        heavy  = 90.0,          -- Speed difference needed to disable vehicle instantly (LastSpeed - CurrentSpeed)
     },
-    globalmultiplier = 20.0,
-    classmultiplier = {
-        [0] =   1.0,		--	0: Compacts
-                1.0,		--	1: Sedans
-                1.0,		--	2: SUVs
-                0.95,		--	3: Coupes
-                1.0,		--	4: Muscle
-                0.95,		--	5: Sports Classics
-                0.95,		--	6: Sports
-                0.95,		--	7: Super
-                0.47,		--	8: Motorcycles
-                0.7,		--	9: Off-road
-                0.25,		--	10: Industrial
-                0.35,		--	11: Utility
-                0.85,		--	12: Vans
-                1.0,		--	13: Cycles
-                0.4,		--	14: Boats
-                0.7,		--	15: Helicopters
-                0.7,		--	16: Planes
-                0.75,		--	17: Service
-                0.35,		--	18: Emergency
-                0.27,		--	19: Military
-                0.43,		--	20: Commercial
-                0.1		    --	21: Trains
+    globalmultiplier = 20.0,    -- Base damage multiplier for all vehicles (lower value = less damage)
+    classmultiplier = {         -- Add-on damage multiplier for vehicle classes
+        [0] =   1.0,            -- 0: Compacts
+                1.0,            -- 1: Sedans
+                1.0,	        -- 2: SUVs
+                0.95,	        -- 3: Coupes
+                1.0,	        -- 4: Muscle
+                0.95,           -- 5: Sports Classics
+                0.95,	        -- 6: Sports
+                0.95,	        -- 7: Super
+                0.47,	        -- 8: Motorcycles
+                0.7,	        -- 9: Off-road
+                0.25,	        -- 10: Industrial
+                0.35,	        -- 11: Utility
+                0.85,	        -- 12: Vans
+                1.0,	        -- 13: Bicycles
+                0.4,	        -- 14: Boats
+                0.7,	        -- 15: Helicopters
+                0.7,	        -- 16: Planes
+                0.75,	        -- 17: Service
+                0.35,	        -- 18: Emergency
+                0.27,	        -- 19: Military
+                0.43,	        -- 20: Commercial
+                0.1,	        -- 21: Trains
+                1.0,	        -- 22: Open Wheel
     },
-    regulated = {
-        [0] =   true,       -- compacts
-                true,       -- sedans
-                true,       -- SUV's
-                true,       -- coupes
-                true,       -- muscle
-                true,       -- sport classic
-                true,       -- sport
-                true,       -- super
-                false,      -- motorcycle
-                true,       -- offroad
-                true,       -- industrial
-                true,       -- utility
-                true,       -- vans
-                false,      -- bicycles
-                false,      -- boats
-                false,      -- helicopter
-                false,      -- plane
-                true,       -- service
-                true,       -- emergency
-                false,      -- military
-                true,       -- commercial
-                false,      -- trains
-                true,       -- open wheel
+    regulated = {               -- Prevent controls for vehicle class while flipped/airborne
+        [0] =   true,           -- 0: Compacts
+                true,           -- 1: Sedans
+                true,           -- 2: SUVs
+                true,           -- 3: Coupes
+                true,           -- 4: Muscle
+                true,           -- 5: Sports Classics
+                true,           -- 6: Sports
+                true,           -- 7: Super
+                false,          -- 8: Motorcycles
+                true,           -- 9: Off-road
+                true,           -- 10: Industrial
+                true,           -- 11: Utility
+                true,           -- 12: Vans
+                false,          -- 13: Bicycles
+                false,          -- 14: Boats
+                false,          -- 15: Helicopters
+                false,          -- 16: Planes
+                true,           -- 17: Service
+                true,           -- 18: Emergency
+                false,          -- 19: Military
+                true,           -- 20: Commercial
+                false,          -- 21: Trains
+                true,           -- 22: Open Wheel
     },
     backengine = {
         [`ninef`] = true,
