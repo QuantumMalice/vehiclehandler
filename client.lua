@@ -1,9 +1,7 @@
-local ox_lib, msg_lib = lib.checkDependency('ox_lib', '3.24.0')
-if not ox_lib then print(msg_lib) return end
+if not lib.checkDependency('ox_lib', '3.24.0', true) then return end
 
 if GetResourceState('ox_inventory') == 'started' then
-    local ox_inv, msg_inv = lib.checkDependency('ox_inventory', '2.41.0')
-    if not ox_inv then print(msg_inv) return end
+    if not lib.checkDependency('ox_inventory', '2.41.0', true) then return end
 end
 
 ---@class Handler : OxClass
