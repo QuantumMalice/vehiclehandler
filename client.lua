@@ -1,7 +1,7 @@
-if not lib.checkDependency('ox_lib', '3.24.0', true) then return end
+if not lib.checkDependency('ox_lib', '3.27.0', true) then return end
 
 if GetResourceState('ox_inventory') == 'started' then
-    if not lib.checkDependency('ox_inventory', '2.41.0', true) then return end
+    if not lib.checkDependency('ox_inventory', '2.42.3', true) then return end
 end
 
 ---@class Handler : OxClass
