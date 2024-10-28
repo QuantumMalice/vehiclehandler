@@ -5,28 +5,28 @@ if not lib.checkDependency('ox_lib', '3.24.0', true) then return end
 if GetResourceState('ox_inventory') == 'started' then
     if not lib.checkDependency('ox_inventory', '2.41.0', true) then return end
 
-    exports('cleaningkit', function(event, item, inventory, slot, data)
+    exports('cleaningkit', function(event, item, inventory)
         if event == 'usingItem' then
             local success = lib.callback.await('vehiclehandler:basicwash', inventory.id)
             if success then return else return false end
         end
     end)
 
-    exports('tirekit', function(event, item, inventory, slot, data)
+    exports('tirekit', function(event, item, inventory)
         if event == 'usingItem' then
             local success = lib.callback.await('vehiclehandler:basicfix', inventory.id, 'tirekit')
             if success then return else return false end
         end
     end)
 
-    exports('repairkit', function(event, item, inventory, slot, data)
+    exports('repairkit', function(event, item, inventory)
         if event == 'usingItem' then
             local success = lib.callback.await('vehiclehandler:basicfix', inventory.id, 'smallkit')
             if success then return else return false end
         end
     end)
 
-    exports('advancedrepairkit', function(event, item, inventory, slot, data)
+    exports('advancedrepairkit', function(event, item, inventory)
         if event == 'usingItem' then
             local success = lib.callback.await('vehiclehandler:basicfix', inventory.id, 'bigkit')
             if success then return else return false end
@@ -41,14 +41,14 @@ end)
 lib.addCommand('fix', {
     help = 'Repair current vehicle',
     restricted = 'group.admin'
-}, function(source, args, raw)
+}, function(source)
     lib.callback('vehiclehandler:adminfix', source, function() end)
 end)
 
 lib.addCommand('wash', {
     help = 'Clean current vehicle',
     restricted = 'group.admin'
-}, function(source, args, raw)
+}, function(source)
     lib.callback('vehiclehandler:adminwash', source, function() end)
 end)
 
@@ -62,7 +62,7 @@ lib.addCommand('setfuel', {
         },
     },
     restricted = 'group.admin'
-}, function(source, args, raw)
+}, function(source, args)
     local level = args.level
 
     if level then
