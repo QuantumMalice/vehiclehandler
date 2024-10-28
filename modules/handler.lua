@@ -11,7 +11,7 @@ local BONES <const> = {
 }
 
 ---@class Handler : OxClass
----@field private private { active: boolean, limited: boolean, control: boolean, class: number | false, oxfuel: boolean, units: number, electric: boolean }
+---@field private private { active: boolean, limited: boolean, control: boolean, class: number | false, data: table, oxfuel: boolean, units: number, electric: boolean }
 ---@diagnostic disable-next-line: assign-type-mismatch
 local Handler = lib.class('vehiclehandler')
 
@@ -37,6 +37,12 @@ function Handler:isFuelOx() return self.private.oxfuel end
 function Handler:getUnits() return self.private.units end
 
 function Handler:isElectric() return self.private.electric end
+
+function Handler:getData(state)
+    if not state or type(state) ~= 'string' then return end
+
+    return self.private.data[state]
+end
 
 function Handler:isValid()
     if not cache.ped then return false end
@@ -75,6 +81,7 @@ function Handler:setActive(state)
         else
             self.private.class = false
             self.private.electric = false
+            self.private.data = {['engine'] = 0, ['body'] = 0, ['speed'] = 0}
         end
     end
 end
@@ -89,6 +96,14 @@ function Handler:setControl(state)
     if state ~= nil and type(state) == 'boolean' then
         self.private.control = state
     end
+end
+
+function Handler:setData(data)
+    if not data then return end
+
+    self.private.data = data
+
+    return data['engine'], data['body'], data['speed']
 end
 
 function Handler:getEngineData(vehicle)

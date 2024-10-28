@@ -7,7 +7,6 @@ end
 ---@class Handler : OxClass
 local Handler = require 'modules.handler'
 local Settings = lib.load('data.vehicle')
-local vehicleData = {['engine'] = 0, ['body'] = 0, ['speed'] = 0}
 
 local function startThread(vehicle)
     if not vehicle then return end
@@ -23,12 +22,14 @@ local function startThread(vehicle)
         while (cache.vehicle == vehicle) and (cache.seat == -1) do
 
             -- Retrieve latest vehicle data
-            vehicleData['engine'] = GetVehicleEngineHealth(vehicle)
-            vehicleData['body'] = GetVehicleBodyHealth(vehicle)
-            vehicleData['speed'] = GetEntitySpeed(vehicle) * units
+            local engine, body, speed = Handler:setData({
+                ['engine'] = GetVehicleEngineHealth(vehicle),
+                ['body'] = GetVehicleBodyHealth(vehicle),
+                ['speed'] = GetEntitySpeed(vehicle) * units
+            })
 
             -- Prevent negative engine health
-            if vehicleData['engine'] < 0 then
+            if engine < 0 then
                 SetVehicleEngineHealth(cache.vehicle, 0.0)
 
                 -- Driveability handler (health)
@@ -38,7 +39,7 @@ local function startThread(vehicle)
             end
 
             -- Prevent negative body health
-            if vehicleData['body'] < 0 then
+            if body < 0 then
                 SetVehicleBodyHealth(cache.vehicle, 0.0)
             end
 
@@ -54,13 +55,13 @@ local function startThread(vehicle)
             end
 
             -- Reduce torque after half-life
-            if vehicleData['engine'] < 500 then
+            if engine < 500 then
                 if not Handler:isLimited() then
                     Handler:setLimited(true)
 
                     CreateThread(function()
-                        while (cache.vehicle == vehicle) and (cache.seat == -1) and (vehicleData['engine'] < 500) do
-                            local newtorque = (vehicleData['engine'] + 500) / 1100
+                        while (cache.vehicle == vehicle) and (cache.seat == -1) and (Handler:getData('engine') < 500) do
+                            local newtorque = (Handler:getData('engine') + 500) / 1100
                             SetVehicleCheatPowerIncrease(vehicle, newtorque)
                             Wait(1)
                         end
@@ -74,7 +75,7 @@ local function startThread(vehicle)
             if Settings.regulated[class] then
                 local roll, airborne = 0.0, false
 
-                if vehicleData['speed'] < 2.0 then
+                if speed < 2.0 then
                     roll = GetEntityRoll(vehicle)
                 else
                     airborne = IsEntityInAir(vehicle)
@@ -102,7 +103,6 @@ local function startThread(vehicle)
             Wait(300)
         end
 
-        vehicleData = {['engine'] = 0, ['body'] = 0, ['speed'] = 0}
         Handler:setActive(false)
 
         -- Retrigger thread if admin spawns a new vehicle while in one
@@ -118,15 +118,15 @@ AddEventHandler('entityDamaged', function (victim, _, weapon, _)
     if GetWeapontypeGroup(weapon) ~= 0 then return end
 
     -- Damage handler
-    local bodyDiff = vehicleData['body'] - GetVehicleBodyHealth(cache.vehicle)
+    local bodyDiff = Handler:getData('body') - GetVehicleBodyHealth(cache.vehicle)
     if bodyDiff > 0 then
 
         -- Calculate latest damage
         local bodyDamage = bodyDiff * Settings.globalmultiplier * Settings.classmultiplier[Handler:getClass()]
-        local newEngine = vehicleData['engine'] - bodyDamage
+        local newEngine = GetVehicleEngineHealth(cache.vehicle) - bodyDamage
 
         -- Update engine health
-        if newEngine ~= vehicleData['engine'] and newEngine > 0 then
+        if newEngine > 0 and newEngine ~= Handler:getData('engine') then
             SetVehicleEngineHealth(cache.vehicle, newEngine)
         else
             SetVehicleEngineHealth(cache.vehicle, 0.0)
@@ -134,7 +134,7 @@ AddEventHandler('entityDamaged', function (victim, _, weapon, _)
     end
 
     -- Impact handler
-    local speedDiff = vehicleData['speed'] - (GetEntitySpeed(cache.vehicle) *  Handler:getUnits())
+    local speedDiff = Handler:getData('speed') - (GetEntitySpeed(cache.vehicle) *  Handler:getUnits())
     if speedDiff >= Settings.threshold.speed then
 
         -- Handle wheel loss
