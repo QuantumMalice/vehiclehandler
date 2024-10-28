@@ -21,7 +21,7 @@ function Handler:constructor()
     self:setControl(true)
     self.private.oxfuel = GetResourceState('ox_fuel') == 'started' and true or false
     self.private.units = Settings.units == 'mph' and 2.23694 or 3.6
-    self.private.electric = GetIsVehicleElectric(GetEntityModel(cache.vehicle))
+    self.private.electric = false
 end
 
 function Handler:isActive() return self.private.active end
@@ -71,8 +71,10 @@ function Handler:setActive(state)
 
         if state then
             self.private.class = GetVehicleClass(cache.vehicle) or false
+            self.private.electric = GetIsVehicleElectric(GetEntityModel(cache.vehicle))
         else
             self.private.class = false
+            self.private.electric = false
         end
     end
 end
