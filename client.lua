@@ -31,11 +31,6 @@ local function startThread(vehicle)
             -- Prevent negative engine health
             if engine < 0 then
                 SetVehicleEngineHealth(cache.vehicle, 0.0)
-
-                -- Driveability handler (health)
-                if IsVehicleDriveable(vehicle, true) then
-                    SetVehicleUndriveable(vehicle, true)
-                end
             end
 
             -- Prevent negative body health
@@ -43,11 +38,11 @@ local function startThread(vehicle)
                 SetVehicleBodyHealth(cache.vehicle, 0.0)
             end
 
-            -- Driveability handler (fuel)
-            if not Handler:isElectric() then
+            -- Driveability handler (engine & fuel)
+            if not oxfuel or oxfuel and not Handler:isElectric() then
                 local fuel = oxfuel and Entity(vehicle).state.fuel or GetVehicleFuelLevel(vehicle)
 
-                if fuel <= 7 then
+                if engine <= 0 or fuel <= 7 then
                     if IsVehicleDriveable(vehicle, true) then
                         SetVehicleUndriveable(vehicle, true)
                     end
