@@ -6,7 +6,7 @@ name        'vehiclehandler'
 description 'Collision/damage handling for FiveM.'
 author      'QuantumMalice'
 repository  'https://github.com/QuantumMalice/vehiclehandler'
-version '1.3.3'
+version '1.3.4'
 
 files {
     'data/progress.lua',
