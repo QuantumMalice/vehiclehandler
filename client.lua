@@ -7,6 +7,7 @@ end
 ---@class Handler : OxClass
 local Handler = require 'modules.handler'
 local Settings = lib.load('data.vehicle')
+local Units = Settings.units == 'mph' and 2.23694 or 3.6
 
 local function startThread(vehicle)
     if not vehicle then return end
@@ -15,7 +16,6 @@ local function startThread(vehicle)
     Handler:setActive(true)
 
     local oxfuel = Handler:isFuelOx()
-    local units = Handler:getUnits()
     local class = Handler:getClass()
 
     CreateThread(function()
@@ -25,7 +25,7 @@ local function startThread(vehicle)
             local engine, body, speed = Handler:setData({
                 ['engine'] = GetVehicleEngineHealth(vehicle),
                 ['body'] = GetVehicleBodyHealth(vehicle),
-                ['speed'] = GetEntitySpeed(vehicle) * units
+                ['speed'] = GetEntitySpeed(vehicle) * Units
             })
 
             -- Prevent negative engine health
@@ -129,7 +129,7 @@ AddEventHandler('entityDamaged', function (victim, _, weapon, _)
     end
 
     -- Impact handler
-    local speedDiff = Handler:getData('speed') - (GetEntitySpeed(cache.vehicle) *  Handler:getUnits())
+    local speedDiff = Handler:getData('speed') - (GetEntitySpeed(cache.vehicle) *  Units)
     if speedDiff >= Settings.threshold.speed then
 
         -- Handle wheel loss
