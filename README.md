@@ -9,8 +9,8 @@
 ➢ Repair/Wash item integration (clean, tire, engine) <br>
 
 ## __Dependencies:__
-* [ox_lib](https://github.com/overextended/ox_lib)
-* [ox_inventory](https://github.com/overextended/ox_inventory) *(Optional)*
+* [ox_lib](https://github.com/CommunityOx/ox_lib)
+* [ox_inventory](https://github.com/CommunityOx/ox_inventory) *(Optional)*
 
 ## ***ox_inventory***:
 ```lua
