@@ -1,10 +1,8 @@
+if not lib then print('^1ox_lib must be started before this resource.^0') return end
+
 lib.versionCheck("QuantumMalice/vehiclehandler")
 
-if not lib.checkDependency('ox_lib', '3.27.0', true) then return end
-
 if GetResourceState('ox_inventory') == 'started' then
-    if not lib.checkDependency('ox_inventory', '2.42.3', true) then return end
-
     exports('cleaningkit', function(event, item, inventory)
         if event == 'usingItem' then
             local success = lib.callback.await('vehiclehandler:basicwash', inventory.id)
