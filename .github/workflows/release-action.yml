@@ -30,7 +30,7 @@ jobs:
           shopt -s extglob
           mkdir -p ./temp/${{ github.event.repository.name }}
           cp ./{README.md,LICENSE,fxmanifest.lua,client.lua,server.lua} ./temp/${{ github.event.repository.name }}
-          cp -r ./{data,images,modules} ./temp/${{ github.event.repository.name }}
+          cp -r ./{data,images,modules,locales} ./temp/${{ github.event.repository.name }}
           cd ./temp && zip -r ../${{ github.event.repository.name }}.zip ./${{ github.event.repository.name }}
 
       - name: Update CHANGELOG
