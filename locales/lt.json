@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Nustatyti transporto priemonės kuro lygį", "params": {"name": "lygis", "type": "skaičius", "help": "Nustatomas kuro lygis"}},
+        "fix": {"help": "Remontuoti dabartinę transporto priemonę"},
+        "wash": {"help": "Valyti dabartinę transporto priemonę"}
+    },
+    "progress": {
+        "cleankit": "Valomas transporto priemonė",
+        "tirekit": "Remontuojami ratai",
+        "smallkit": "Remontuojama transporto priemonė",
+        "bigkit": "Remontuojama transporto priemonė"
+    },
+    "notify": {
+        "cannotRepair": "Negalima toliau remontuoti transporto priemonės",
+        "backEngine": "Variklio skyrius yra gale"
+    }
+}

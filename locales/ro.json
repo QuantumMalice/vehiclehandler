@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Setează nivelul de combustibil al vehiculului", "params": {"name": "nivel", "type": "număr", "help": "Nivelul de combustibil de setat"}},
+        "fix": {"help": "Repară vehiculul curent"},
+        "wash": {"help": "Curăță vehiculul curent"}
+    },
+    "progress": {
+        "cleankit": "Curățare vehicul",
+        "tirekit": "Reparare anvelope",
+        "smallkit": "Reparare vehicul",
+        "bigkit": "Reparare vehicul"
+    },
+    "notify": {
+        "cannotRepair": "Nu se poate repara vehiculul mai mult",
+        "backEngine": "Compartimentul motorului este în spate"
+    }
+}

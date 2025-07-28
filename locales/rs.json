@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Podesite nivo goriva vozila", "params": {"name": "nivo", "type": "broj", "help": "Nivo goriva za podešavanje"}},
+        "fix": {"help": "Popravite trenutni automobil"},
+        "wash": {"help": "Očistite trenutni automobil"}
+    },
+    "progress": {
+        "cleankit": "Čišćenje automobila",
+        "tirekit": "Popravka guma",
+        "smallkit": "Popravka automobila",
+        "bigkit": "Popravka automobila"
+    },
+    "notify": {
+        "cannotRepair": "Ne može se dalje popraviti vozilo",
+        "backEngine": "Prostor za motor je pozadi"
+    }
+}

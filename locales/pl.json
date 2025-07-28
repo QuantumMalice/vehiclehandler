@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Ustaw poziom paliwa pojazdu", "params": {"name": "poziom", "type": "liczba", "help": "Poziom paliwa do ustawienia"}},
+        "fix": {"help": "Napraw obecny pojazd"},
+        "wash": {"help": "Wyczyść obecny pojazd"}
+    },
+    "progress": {
+        "cleankit": "Czyszczenie pojazdu",
+        "tirekit": "Naprawa opon",
+        "smallkit": "Naprawa pojazdu",
+        "bigkit": "Naprawa pojazdu"
+    },
+    "notify": {
+        "cannotRepair": "Nie można dalej naprawiać pojazdu",
+        "backEngine": "Komora silnika jest z tyłu"
+    }
+}

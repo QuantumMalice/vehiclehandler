@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Definir o nível de combustível do veículo", "params": {"name": "nível", "type": "número", "help": "Nível de combustível a definir"}},
+        "fix": {"help": "Reparar veículo atual"},
+        "wash": {"help": "Limpar veículo atual"}
+    },
+    "progress": {
+        "cleankit": "A limpar veículo",
+        "tirekit": "A reparar pneus",
+        "smallkit": "A reparar veículo",
+        "bigkit": "A reparar veículo"
+    },
+    "notify": {
+        "cannotRepair": "Não é possível reparar mais o veículo",
+        "backEngine": "O compartimento do motor fica atrás"
+    }
+}

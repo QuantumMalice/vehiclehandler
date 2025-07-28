@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "車両の燃料レベルを設定", "params": {"name": "レベル", "type": "数値", "help": "設定する燃料レベル"}},
+        "fix": {"help": "現在の車両を修理"},
+        "wash": {"help": "現在の車両を清掃"}
+    },
+    "progress": {
+        "cleankit": "車両を清掃中",
+        "tirekit": "タイヤを修理中",
+        "smallkit": "車両を修理中",
+        "bigkit": "車両を修理中"
+    },
+    "notify": {
+        "cannotRepair": "これ以上車両を修理できません",
+        "backEngine": "エンジンベイは後ろにあります"
+    }
+}

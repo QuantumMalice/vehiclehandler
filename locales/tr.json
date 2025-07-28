@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Bir aracın yakıt seviyesini ayarla", "params": {"name": "seviye", "type": "sayı", "help": "Ayarlanacak yakıt seviyesi"}},
+        "fix": {"help": "Mevcut aracı tamir et"},
+        "wash": {"help": "Mevcut aracı temizle"}
+    },
+    "progress": {
+        "cleankit": "Araç temizleniyor",
+        "tirekit": "Lastikler tamir ediliyor",
+        "smallkit": "Araç tamir ediliyor",
+        "bigkit": "Araç tamir ediliyor"
+    },
+    "notify": {
+        "cannotRepair": "Araç daha fazla tamir edilemez",
+        "backEngine": "Motor bölmesi arkada"
+    }
+}

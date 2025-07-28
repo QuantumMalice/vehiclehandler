@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Imposta il livello di carburante del veicolo", "params": {"name": "livello", "type": "numero", "help": "Livello di carburante da impostare"}},
+        "fix": {"help": "Ripara il veicolo attuale"},
+        "wash": {"help": "Pulisci il veicolo attuale"}
+    },
+    "progress": {
+        "cleankit": "Pulizia del veicolo",
+        "tirekit": "Riparazione pneumatici",
+        "smallkit": "Riparazione veicolo",
+        "bigkit": "Riparazione veicolo"
+    },
+    "notify": {
+        "cannotRepair": "Non è possibile riparare ulteriormente il veicolo",
+        "backEngine": "Il vano motore è dietro"
+    }
+}

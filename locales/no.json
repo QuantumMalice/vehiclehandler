@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Sett drivstoffnivå på kjøretøy", "params": {"name": "nivå", "type": "nummer", "help": "Drivstoffnivå som skal settes"}},
+        "fix": {"help": "Reparer nåværende kjøretøy"},
+        "wash": {"help": "Rengjør nåværende kjøretøy"}
+    },
+    "progress": {
+        "cleankit": "Rengjør kjøretøy",
+        "tirekit": "Reparerer dekk",
+        "smallkit": "Reparerer kjøretøy",
+        "bigkit": "Reparerer kjøretøy"
+    },
+    "notify": {
+        "cannotRepair": "Kan ikke reparere kjøretøyet videre",
+        "backEngine": "Motorrom er bak"
+    }
+}

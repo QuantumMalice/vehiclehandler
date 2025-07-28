@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Ställ in bränslenivån för ett fordon", "params": {"name": "nivå", "type": "nummer", "help": "Bränslenivå att ställa in"}},
+        "fix": {"help": "Reparera nuvarande fordon"},
+        "wash": {"help": "Rengör nuvarande fordon"}
+    },
+    "progress": {
+        "cleankit": "Rengör fordon",
+        "tirekit": "Reparerar däck",
+        "smallkit": "Reparerar fordon",
+        "bigkit": "Reparerar fordon"
+    },
+    "notify": {
+        "cannotRepair": "Kan inte reparera fordonet ytterligare",
+        "backEngine": "Motorutrymmet är baktill"
+    }
+}

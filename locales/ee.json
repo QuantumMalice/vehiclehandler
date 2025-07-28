@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Määra sõiduki kütusetase", "params": {"name": "tase", "type": "number", "help": "Määratav kütusetase"}},
+        "fix": {"help": "Paranda praegune sõiduk"},
+        "wash": {"help": "Puhasta praegune sõiduk"}
+    },
+    "progress": {
+        "cleankit": "Sõiduki puhastamine",
+        "tirekit": "Rehvide parandamine",
+        "smallkit": "Sõiduki parandamine",
+        "bigkit": "Sõiduki parandamine"
+    },
+    "notify": {
+        "cannotRepair": "Sõidukit ei saa enam parandada",
+        "backEngine": "Mootoriruum on tagapool"
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Indstil køretøjets brændstofniveau", "params": {"name": "niveau", "type": "nummer", "help": "Brændstofniveau der skal indstilles"}},
+        "fix": {"help": "Reparer nuværende køretøj"},
+        "wash": {"help": "Rengør nuværende køretøj"}
+    },
+    "progress": {
+        "cleankit": "Rengøring af køretøj",
+        "tirekit": "Reparation af dæk",
+        "smallkit": "Reparation af køretøj",
+        "bigkit": "Reparation af køretøj"
+    },
+    "notify": {
+        "cannotRepair": "Kan ikke reparere køretøjet yderligere",
+        "backEngine": "Motorrum er bagpå"
+    }
+}

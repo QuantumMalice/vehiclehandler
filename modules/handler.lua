@@ -209,14 +209,14 @@ function Handler:fixVehicle(vehicle, coords, fixtype)
         else
             if backengine then
                 lib.notify({
-                    title = 'Engine bay is in back',
+                    title = locale('notify.backEngine'),
                     type = 'error'
                 })
             end
         end
     else
         lib.notify({
-            title = 'Cannot repair vehicle any further',
+            title = locale('notify.cannotRepair'),
             type = 'error'
         })
     end

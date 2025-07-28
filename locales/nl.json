@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Stel het brandstofniveau van een voertuig in", "params": {"name": "niveau", "type": "nummer", "help": "Het in te stellen brandstofniveau"}},
+        "fix": {"help": "Repareer huidig voertuig"},
+        "wash": {"help": "Maak huidig voertuig schoon"}
+    },
+    "progress": {
+        "cleankit": "Voertuig schoonmaken",
+        "tirekit": "Banden repareren",
+        "smallkit": "Voertuig repareren",
+        "bigkit": "Voertuig repareren"
+    },
+    "notify": {
+        "cannotRepair": "Kan voertuig niet verder repareren",
+        "backEngine": "Motorruimte is achterin"
+    }
+}

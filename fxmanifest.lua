@@ -11,9 +11,14 @@ version '1.3.5'
 files {
     'data/progress.lua',
     'data/vehicle.lua',
-    'modules/handler.lua'
+    'modules/handler.lua',
+    'locales/*.json'
 }
 
 shared_script '@ox_lib/init.lua'
 client_script 'client.lua'
 server_script 'server.lua'
+
+dependencies {
+    'ox_lib',
+}
