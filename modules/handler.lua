@@ -134,32 +134,29 @@ end
 
 function Handler:fixTire(vehicle, coords)
     local found = self:isTireBroken(vehicle, coords)
+    if not found then return false end
 
-    if found then
-        local lastengine = GetVehicleEngineHealth(vehicle)
-        local lastbody = GetVehicleBodyHealth(vehicle)
-        local lastdirt = GetVehicleDirtLevel(vehicle)
-        local success = false
+    local lastengine = GetVehicleEngineHealth(vehicle)
+    local lastbody = GetVehicleBodyHealth(vehicle)
+    local lastdirt = GetVehicleDirtLevel(vehicle)
+    local success = false
 
-        LocalPlayer.state:set("inv_busy", true, true)
+    LocalPlayer.state:set("inv_busy", true, true)
 
-        if lib.progressCircle(Progress['tirekit']) then
-            success = true
+    if lib.progressCircle(Progress['tirekit']) then
+        success = true
 
-            lib.callback('vehiclehandler:sync', false, function()
-                SetVehicleFixed(vehicle)
-                SetVehicleEngineHealth(vehicle, lastengine)
-                SetVehicleBodyHealth(vehicle, lastbody)
-                SetVehicleDirtLevel(vehicle, lastdirt)
-            end)
-        end
-
-        LocalPlayer.state:set("inv_busy", false, true)
-
-        return success
+        lib.callback('vehiclehandler:sync', false, function()
+            SetVehicleFixed(vehicle)
+            SetVehicleEngineHealth(vehicle, lastengine)
+            SetVehicleBodyHealth(vehicle, lastbody)
+            SetVehicleDirtLevel(vehicle, lastdirt)
+        end)
     end
 
-    return false
+    LocalPlayer.state:set("inv_busy", false, true)
+
+    return success
 end
 
 function Handler:fixVehicle(vehicle, coords, fixtype)
