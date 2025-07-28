@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Set the fuel level of a vehicle", "params": {"name": "level", "type": "number", "help": "The fuel level to set"}},
+        "fix": {"help": "Repair current vehicle"},
+        "wash": {"help": "Clean current vehicle"}
+    },
+    "progress": {
+        "cleankit": "Cleaning vehicle",
+        "tirekit": "Repairing tires",
+        "smallkit": "Repairing vehicle",
+        "bigkit": "Repairing vehicle"
+    },
+    "notify": {
+        "cannotRepair": "Cannot repair vehicle any further",
+        "backEngine": "Engine bay is in back"
+    }
+}

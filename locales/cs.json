@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Nastavit úroveň paliva vozidla", "params": {"name": "úroveň", "type": "číslo", "help": "Úroveň paliva k nastavení"}},
+        "fix": {"help": "Opravit aktuální vozidlo"},
+        "wash": {"help": "Vyčistit aktuální vozidlo"}
+    },
+    "progress": {
+        "cleankit": "Čištění vozidla",
+        "tirekit": "Oprava pneumatik",
+        "smallkit": "Oprava vozidla",
+        "bigkit": "Oprava vozidla"
+    },
+    "notify": {
+        "cannotRepair": "Vozidlo nelze dále opravit",
+        "backEngine": "Motorový prostor je vzadu"
+    }
+}

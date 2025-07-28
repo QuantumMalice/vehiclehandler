@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "设置车辆燃油量", "params": {"name": "燃油量", "type": "数字", "help": "要设置的燃油量"}},
+        "fix": {"help": "修理当前车辆"},
+        "wash": {"help": "清洁当前车辆"}
+    },
+    "progress": {
+        "cleankit": "正在清洁车辆",
+        "tirekit": "正在修理轮胎",
+        "smallkit": "正在修理车辆",
+        "bigkit": "正在修理车辆"
+    },
+    "notify": {
+        "cannotRepair": "无法进一步修理车辆",
+        "backEngine": "发动机舱在后面"
+    }
+}

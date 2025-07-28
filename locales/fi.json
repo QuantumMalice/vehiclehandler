@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Aseta ajoneuvon polttoainetaso","params": {"name": "taso","type": "numero","help": "Asetettava polttoainetaso"}},
+        "fix": {"help": "Korjaa nykyinen ajoneuvo"},
+        "wash": {"help": "Puhdista nykyinen ajoneuvo"}
+    },
+    "progress": {
+        "cleankit": "Ajoneuvon puhdistus",
+        "tirekit": "Renkaiden korjaus",
+        "smallkit": "Ajoneuvon korjaus",
+        "bigkit": "Ajoneuvon korjaus"
+    },
+    "notify": {
+        "cannotRepair": "Ajoneuvoa ei voi korjata enempää",
+        "backEngine": "Moottoritila on takana"
+    }
+}

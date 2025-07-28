@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Állítsa be a jármű üzemanyagszintjét", "params": {"name": "szint", "type": "szám", "help": "Beállítandó üzemanyagszint"}},
+        "fix": {"help": "Jelenlegi jármű javítása"},
+        "wash": {"help": "Jelenlegi jármű tisztítása"}
+    },
+    "progress": {
+        "cleankit": "Jármű tisztítása",
+        "tirekit": "Gumik javítása",
+        "smallkit": "Jármű javítása",
+        "bigkit": "Jármű javítása"
+    },
+    "notify": {
+        "cannotRepair": "A járművet nem lehet tovább javítani",
+        "backEngine": "A motortér hátul van"
+    }
+}

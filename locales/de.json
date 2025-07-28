@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Kraftstoffstand des Fahrzeugs einstellen", "params": { "name": "Stand", "type": "Nummer", "help": "Kraftstoffstand zum Einstellen" } },
+        "fix": {"help": "Fahrzeug reparieren" },
+        "wash": {"help": "Fahrzeug reinigen" }
+    },
+    "progress": {
+        "cleankit": "Fahrzeug wird gereinigt",
+        "tirekit": "Reifen werden repariert",
+        "smallkit": "Fahrzeug wird repariert",
+        "bigkit": "Fahrzeug wird repariert"
+    },
+    "notify": {
+        "cannotRepair": "Fahrzeug kann nicht weiter repariert werden",
+        "backEngine": "Motorraum ist hinten"
+    }
+}

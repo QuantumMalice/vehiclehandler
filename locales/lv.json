@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Iestatīt transportlīdzekļa degvielas līmeni", "params": {"name": "līmenis", "type": "skaitlis", "help": "Degvielas līmenis, ko iestatīt"}},
+        "fix": {"help": "Salabot pašreizējo transportlīdzekli"},
+        "wash": {"help": "Notīrīt pašreizējo transportlīdzekli"}
+    },
+    "progress": {
+        "cleankit": "Tiek tīrīts transportlīdzeklis",
+        "tirekit": "Tiek laboti riteņi",
+        "smallkit": "Tiek labots transportlīdzeklis",
+        "bigkit": "Tiek labots transportlīdzeklis"
+    },
+    "notify": {
+        "cannotRepair": "Nevar turpināt labot transportlīdzekli",
+        "backEngine": "Dzinēja nodalījums ir aizmugurē"
+    }
+}

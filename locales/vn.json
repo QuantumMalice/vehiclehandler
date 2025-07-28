@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Đặt mức nhiên liệu cho xe", "params": {"name": "mức", "type": "số", "help": "Mức nhiên liệu cần đặt"}},
+        "fix": {"help": "Sửa xe hiện tại"},
+        "wash": {"help": "Làm sạch xe hiện tại"}
+    },
+    "progress": {
+        "cleankit": "Đang làm sạch xe",
+        "tirekit": "Đang sửa lốp xe",
+        "smallkit": "Đang sửa xe",
+        "bigkit": "Đang sửa xe"
+    },
+    "notify": {
+        "cannotRepair": "Không thể sửa chữa xe thêm nữa",
+        "backEngine": "Khoang động cơ ở phía sau"
+    }
+}

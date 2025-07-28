@@ -1,6 +1,6 @@
 return {
     ['cleankit'] = {
-        label = "Cleaning vehicle",
+        label = locale('progress.cleankit'),
         duration = 15000,
         position = 'bottom',
         useWhileDead = false,
@@ -13,7 +13,7 @@ return {
         },
     },
     ['tirekit'] = {
-        label = "Repairing tires",
+        label = locale('progress.tirekit'),
         duration = 15000,
         position = 'bottom',
         useWhileDead = false,
@@ -31,7 +31,7 @@ return {
         },
     },
     ['smallkit'] = {
-        label = "Repairing vehicle",
+        label = locale('progress.smallkit'),
         duration = 20000,
         position = 'bottom',
         useWhileDead = false,
@@ -48,7 +48,7 @@ return {
         },
     },
     ['bigkit'] = {
-        label = "Repairing vehicle",
+        label = locale('progress.bigkit'),
         duration = 30000,
         position = 'bottom',
         useWhileDead = false,

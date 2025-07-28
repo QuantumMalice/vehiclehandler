@@ -1,0 +1,17 @@
+{
+    "commands": {
+        "setfuel": {"help": "Settu eldsneytisstig ökutækis", "params": {"name": "stig", "type": "tala", "help": "Eldsneytisstig til að setja"}},
+        "fix": {"help": "Laga núverandi ökutæki"},
+        "wash": {"help": "Hreinsa núverandi ökutæki"}
+    },
+    "progress": {
+        "cleankit": "Hreinsa ökutæki",
+        "tirekit": "Laga dekk",
+        "smallkit": "Laga ökutæki",
+        "bigkit": "Laga ökutæki"
+    },
+    "notify": {
+        "cannotRepair": "Get ekki gert við ökutækið frekar",
+        "backEngine": "Vélarrými er aftan á"
+    }
+}
