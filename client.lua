@@ -83,8 +83,6 @@ local function startThread(vehicle)
                 local roll, airborne = 0.0, false
 
                 if speed < 2.0 then
-
-                if speed < 2.0 then
                     roll = GetEntityRoll(vehicle)
                 else
                     airborne = IsEntityInAir(vehicle)
