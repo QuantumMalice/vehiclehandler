@@ -57,6 +57,10 @@ return {
                 false,          -- 21: Trains
                 true,           -- 22: Open Wheel
     },
+    regulated_exclusions = {    -- Prevent rotation controls for these specific models, even if their class is regulated
+        [`deluxo`] = true,
+        [`scramjet`] = true,
+    },
     backengine = {
         [`ninef`] = true,
         [`adder`] = true,
