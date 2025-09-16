@@ -6,14 +6,6 @@ local Handler = require 'modules.handler'
 local Settings = lib.load('data.vehicle')
 local Units = Settings.units == 'mph' and 2.23694 or 3.6
 
--- Process the exclusion list into a hash set for efficient lookups
-local RegulatedExclusions = {}
-if Settings.regulated_exclusions then
-    for model, _ in pairs(Settings.regulated_exclusions) do
-        RegulatedExclusions[GetHashKey(model)] = true
-    end
-end
-
 local function startThread(vehicle)
     if not vehicle then return end
     if not Handler or Handler:isActive() then return end
@@ -78,8 +70,7 @@ local function startThread(vehicle)
             end
 
             -- Prevent rotation controls while flipped/airborne
-            local modelHash = GetEntityModel(vehicle)
-            if Settings.regulated[class] and RegulatedExclusions[modelHash] then
+            if Settings.regulated[class] and not Settings.regulated_exclusions[GetEntityModel(vehicle)] then
                 local roll, airborne = 0.0, false
 
                 if speed < 2.0 then
