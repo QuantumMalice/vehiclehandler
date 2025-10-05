@@ -6,6 +6,7 @@ local Handler = require 'modules.handler'
 local Settings = lib.load('data.vehicle')
 local Units = Settings.units == 'mph' and 2.23694 or 3.6
 
+---@param vehicle number
 local function startThread(vehicle)
     if not vehicle then return end
     if not Handler or Handler:isActive() then return end
@@ -110,7 +111,9 @@ local function startThread(vehicle)
     end)
 end
 
-AddEventHandler('entityDamaged', function (victim, _, weapon, _)
+---@param victim number
+---@param weapon number | string
+AddEventHandler('entityDamaged', function(victim, _, weapon, _)
     if not Handler or not Handler:isActive() then return end
     if victim ~= cache.vehicle then return end
     if GetWeapontypeGroup(weapon) ~= 0 then return end
@@ -152,31 +155,39 @@ AddEventHandler('entityDamaged', function (victim, _, weapon, _)
     end
 end)
 
+---@param fixtype string
+---@return boolean | nil success
 lib.callback.register('vehiclehandler:basicfix', function(fixtype)
     if not Handler then return end
     return Handler:basicfix(fixtype)
 end)
 
+---@return boolean | nil success
 lib.callback.register('vehiclehandler:basicwash', function()
     if not Handler then return end
     return Handler:basicwash()
 end)
 
+---@return boolean | nil success
 lib.callback.register('vehiclehandler:adminfix', function()
     if not Handler or not Handler:isActive() then return end
     return Handler:adminfix()
 end)
 
+---@return boolean | nil success
 lib.callback.register('vehiclehandler:adminwash', function()
     if not Handler or not Handler:isActive() then return end
     return Handler:adminwash()
 end)
 
+---@param newlevel number
+---@return boolean | nil success
 lib.callback.register('vehiclehandler:adminfuel', function(newlevel)
     if not Handler or not Handler:isActive() then return end
     return Handler:adminfuel(newlevel)
 end)
 
+---@param seat number
 lib.onCache('seat', function(seat)
     if seat == -1 then
         startThread(cache.vehicle)
