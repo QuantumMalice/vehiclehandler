@@ -44,7 +44,7 @@ local function startThread(vehicle)
             end
 
             -- Driveability handler (fuel)
-            if not Handler:isElectric() then
+            if not Handler:isElectric() and Handler:getClass() ~= 14 then
                 local fuel = oxfuel and Entity(vehicle).state.fuel or GetVehicleFuelLevel(vehicle)
 
                 if fuel <= 7 then
