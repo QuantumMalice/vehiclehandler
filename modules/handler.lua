@@ -15,6 +15,7 @@ local BONES <const> = {
 ---@field limited boolean
 ---@field control boolean
 ---@field class number | false
+---@field model number | false
 ---@field data table
 ---@field oxfuel boolean
 ---@field electric boolean
@@ -43,6 +44,9 @@ function Handler:canControl() return self.private.control end
 
 ---@return number | false class
 function Handler:getClass() return self.private.class end
+
+---@return number | false class
+function Handler:getModel() return self.private.model end
 
 ---@return boolean oxfuel
 function Handler:isFuelOx() return self.private.oxfuel end
@@ -96,9 +100,11 @@ function Handler:setActive(state)
 
         if state then
             self.private.class = GetVehicleClass(cache.vehicle) or false
-            self.private.electric = GetIsVehicleElectric(GetEntityModel(cache.vehicle))
+            self.private.model = GetEntityModel(cache.vehicle)
+            self.private.electric = GetIsVehicleElectric(self.private.model)
         else
             self.private.class = false
+            self.private.model = false
             self.private.electric = false
             self.private.data = {['engine'] = 0, ['body'] = 0, ['speed'] = 0}
         end
@@ -134,7 +140,7 @@ end
 function Handler:getEngineData(vehicle)
     if not vehicle or vehicle == 0 then return end
 
-    local backengine = Settings.backengine[GetEntityModel(vehicle)]
+    local backengine = Settings.backengine[self.private.model]
     local distance = backengine and -2.5 or 2.5
     local index = backengine and 5 or 4
     local offset = GetOffsetFromEntityInWorldCoords(vehicle, 0, distance, 0)

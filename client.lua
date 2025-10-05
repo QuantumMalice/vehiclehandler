@@ -15,6 +15,7 @@ local function startThread(vehicle)
 
     local oxfuel = Handler:isFuelOx()
     local class = Handler:getClass()
+    local model = Handler:getModel()
 
     CreateThread(function()
         while (cache.vehicle == vehicle) and (cache.seat == -1) do
@@ -71,7 +72,7 @@ local function startThread(vehicle)
             end
 
             -- Prevent rotation controls while flipped/airborne
-            if Settings.regulated[class] then
+            if Settings.regulated[class] and not Settings.exclusions[model] then
                 local roll, airborne = 0.0, false
 
                 if speed < 2.0 then
