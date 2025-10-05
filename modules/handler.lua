@@ -50,7 +50,7 @@ function Handler:isFuelOx() return self.private.oxfuel end
 ---@return boolean electric
 function Handler:isElectric() return self.private.electric end
 
----@param state table<string, number>
+---@param state string
 ---@return number | nil
 function Handler:getData(state)
     if not state or type(state) ~= 'string' then return end
