@@ -30,7 +30,6 @@ function Handler:constructor()
     self:setLimited(false)
     self:setControl(true)
     self.private.oxfuel = GetResourceState('ox_fuel') == 'started' and true or false
-    self.private.electric = false
 end
 
 ---@return boolean active
