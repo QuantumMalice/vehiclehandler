@@ -124,8 +124,15 @@ function Handler:setControl(state)
     end
 end
 
----@param data table<string, number>[]
----@return table<string, number>[] | nil, table<string, number>[] | nil, table<string, number>[] | nil data
+---@class handlerData
+---@field engine number
+---@field body number
+---@field speed number
+
+---@param data handlerData
+---@return number | nil engine
+---@return number |nil body
+---@return number | nil speed
 function Handler:setData(data)
     if not data then return end
 
@@ -135,7 +142,10 @@ function Handler:setData(data)
 end
 
 ---@param vehicle number
----@return boolean | nil, vector3 | nil, number | nil, number | nil enginedata
+---@return boolean | nil backengine
+---@return vector3 | nil offset
+---@return number | nil index
+---@return number | nil engine
 function Handler:getEngineData(vehicle)
     if not vehicle or vehicle == 0 then return end
 
