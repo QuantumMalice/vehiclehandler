@@ -321,34 +321,42 @@ end
 function Handler:adminfix()
     if not self:isValid() then return false end
 
-    lib.callback('vehiclehandler:sync', false, function()
-        SetVehicleFixed(cache.vehicle)
-        ResetVehicleWheels(cache.vehicle, true)
+    local success = lib.callback.await('ox_lib:checkPlayerAce', false, 'command.fix')
 
-        if self:isFuelOx() then
-            Entity(cache.vehicle).state.fuel = 100.0
-        end
+    if success then
+        lib.callback('vehiclehandler:sync', false, function()
+            SetVehicleFixed(cache.vehicle)
+            ResetVehicleWheels(cache.vehicle, true)
 
-        SetVehicleFuelLevel(cache.vehicle, 100.0)
-        DecorSetFloat(cache.vehicle, '_FUEL_LEVEL', GetVehicleFuelLevel(cache.vehicle))
+            if self:isFuelOx() then
+                Entity(cache.vehicle).state.fuel = 100.0
+            end
 
-        SetVehicleUndriveable(cache.vehicle, false)
-        SetVehicleEngineOn(cache.vehicle, true, true, true)
-    end)
+            SetVehicleFuelLevel(cache.vehicle, 100.0)
+            DecorSetFloat(cache.vehicle, '_FUEL_LEVEL', GetVehicleFuelLevel(cache.vehicle))
 
-    return true
+            SetVehicleUndriveable(cache.vehicle, false)
+            SetVehicleEngineOn(cache.vehicle, true, true, true)
+        end)
+    end
+
+    return success
 end
 
 ---@return boolean success
 function Handler:adminwash()
     if not self:isValid() then return false end
 
-    lib.callback('vehiclehandler:sync', false, function()
-        SetVehicleDirtLevel(cache.vehicle, 0.0)
-        WashDecalsFromVehicle(cache.vehicle, 1.0)
-    end)
+    local success = lib.callback.await('ox_lib:checkPlayerAce', false, 'command.wash')
 
-    return true
+    if success then
+        lib.callback('vehiclehandler:sync', false, function()
+            SetVehicleDirtLevel(cache.vehicle, 0.0)
+            WashDecalsFromVehicle(cache.vehicle, 1.0)
+        end)
+    end
+
+    return success
 end
 
 ---@param newlevel number
@@ -357,21 +365,25 @@ function Handler:adminfuel(newlevel)
     if not self:isValid() then return false end
     if not newlevel then return false end
 
-    newlevel = lib.math.clamp(newlevel, 0.0, 100.0) + 0.0
+    local success = lib.callback.await('ox_lib:checkPlayerAce', false, 'command.setfuel')
 
-    lib.callback('vehiclehandler:sync', false, function()
-        if self:isFuelOx() then
-            Entity(cache.vehicle).state.fuel = newlevel
-        end
+    if success then
+        newlevel = lib.math.clamp(newlevel, 0.0, 100.0) + 0.0
 
-        SetVehicleFuelLevel(cache.vehicle, newlevel)
-        DecorSetFloat(cache.vehicle, '_FUEL_LEVEL', GetVehicleFuelLevel(cache.vehicle))
+        lib.callback('vehiclehandler:sync', false, function()
+            if self:isFuelOx() then
+                Entity(cache.vehicle).state.fuel = newlevel
+            end
 
-        SetVehicleUndriveable(cache.vehicle, false)
-        SetVehicleEngineOn(cache.vehicle, true, true, true)
-    end)
+            SetVehicleFuelLevel(cache.vehicle, newlevel)
+            DecorSetFloat(cache.vehicle, '_FUEL_LEVEL', GetVehicleFuelLevel(cache.vehicle))
 
-    return true
+            SetVehicleUndriveable(cache.vehicle, false)
+            SetVehicleEngineOn(cache.vehicle, true, true, true)
+        end)
+    end
+
+    return success
 end
 
 return Handler
