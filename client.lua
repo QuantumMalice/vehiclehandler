@@ -3,8 +3,8 @@ lib.locale()
 
 ---@class Handler : OxClass
 local Handler = require 'modules.handler'
-local Settings = lib.load('data.vehicle')
-local Units = Settings.units == 'mph' and 2.23694 or 3.6
+local Settings <const> = lib.load('data.vehicle')
+local Units <const> = Settings.units == 'mph' and 2.23694 or 3.6
 
 ---@param vehicle number
 local function startThread(vehicle)
@@ -14,6 +14,7 @@ local function startThread(vehicle)
     Handler:setActive(true)
 
     local oxfuel = Handler:isFuelOx()
+    local electric = Handler:isElectric()
     local class = Handler:getClass()
     local model = Handler:getModel()
 
@@ -44,7 +45,7 @@ local function startThread(vehicle)
             end
 
             -- Driveability handler (fuel)
-            if not Handler:isElectric() and Handler:getClass() ~= 14 then
+            if not electric and class ~= 14 then
                 local fuel = oxfuel and Entity(vehicle).state.fuel or GetVehicleFuelLevel(vehicle)
 
                 if fuel <= 7 then
@@ -55,20 +56,20 @@ local function startThread(vehicle)
             end
 
             -- Reduce torque after half-life
-            if engine < 500 then
-                if not Handler:isLimited() then
-                    Handler:setLimited(true)
+            if not Handler:isLimited() and engine < 500 then
+                Handler:setLimited(true)
 
-                    CreateThread(function()
-                        while (cache.vehicle == vehicle) and (cache.seat == -1) and (Handler:getData('engine') < 500) do
-                            local newtorque = (Handler:getData('engine') + 500) / 1100
-                            SetVehicleCheatPowerIncrease(vehicle, newtorque)
-                            Wait(1)
-                        end
+                CreateThread(function()
+                    while cache.vehicle == vehicle and cache.seat == -1 do
+                        local engineLevel = Handler:getData('engine')
+                        if engineLevel >= 500 then break end
 
-                        Handler:setLimited(false)
-                    end)
-                end
+                        SetVehicleCheatPowerIncrease(vehicle, (engineLevel + 500) / 1100)
+                        Wait(1)
+                    end
+
+                    Handler:setLimited(false)
+                end)
             end
 
             -- Prevent rotation controls while flipped/airborne
