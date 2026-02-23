@@ -119,6 +119,7 @@ AddEventHandler('entityDamaged', function(victim, _, weapon, _)
     if not Handler or not Handler:isActive() then return end
     if victim ~= cache.vehicle then return end
     if GetWeapontypeGroup(weapon) ~= 0 then return end
+    if Handler:getClass() == 14 then return end
 
     -- Damage handler
     local bodyDiff = Handler:getData('body') - GetVehicleBodyHealth(cache.vehicle)
