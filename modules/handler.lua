@@ -99,13 +99,13 @@ function Handler:setActive(state)
         self.private.active = state
 
         if state then
-            self.private.electric = GetIsVehicleElectric(self.private.model)
             self.private.class = GetVehicleClass(cache.vehicle) or false
             self.private.model = GetEntityModel(cache.vehicle)
+            self.private.electric = GetIsVehicleElectric(self.private.model)
         else
-            self.private.electric = false
             self.private.class = false
             self.private.model = false
+            self.private.electric = false
             self.private.data = {['engine'] = 0, ['body'] = 0, ['speed'] = 0}
         end
     end
@@ -150,7 +150,7 @@ end
 function Handler:getFixData(vehicle)
     if not vehicle or vehicle == 0 then return end
 
-    local backengine = Settings.backengine[self.private.model]
+    local backengine = Settings.backengine[GetEntityModel(vehicle)]
     local distance = backengine and -2.5 or 2.5
     local index = backengine and 5 or 4
     local offset = GetOffsetFromEntityInWorldCoords(vehicle, 0, distance, 0)
