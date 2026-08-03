@@ -189,8 +189,6 @@ function Handler:fixTire(vehicle, coords)
     local lastdirt = GetVehicleDirtLevel(vehicle)
     local success = false
 
-    LocalPlayer.state:set("inv_busy", true, true)
-
     if lib.progressCircle(Progress['tirekit']) then
         success = true
 
@@ -201,8 +199,6 @@ function Handler:fixTire(vehicle, coords)
             SetVehicleDirtLevel(vehicle, lastdirt)
         end)
     end
-
-    LocalPlayer.state:set("inv_busy", false, true)
 
     return success
 end
@@ -227,8 +223,6 @@ function Handler:fixVehicle(vehicle, coords, fixtype)
         lib.notify({ title = locale('notify.cannotRepair'), type = 'error' })
         return success
     end
-
-    LocalPlayer.state:set("inv_busy", true, true)
 
     if hoodindex then
         lib.callback('vehiclehandler:sync', false, function()
@@ -265,8 +259,6 @@ function Handler:fixVehicle(vehicle, coords, fixtype)
         end)
     end
 
-    LocalPlayer.state:set("inv_busy", false, true)
-
     return success
 end
 
@@ -298,7 +290,6 @@ function Handler:basicwash()
     if #(pos - vehpos) > 3.0 or cache.vehicle then return false end
 
     local success = false
-    LocalPlayer.state:set("inv_busy", true, true)
     TaskStartScenarioInPlace(cache.ped, "WORLD_HUMAN_MAID_CLEAN", 0, true)
 
     if lib.progressCircle(Progress['cleankit']) then
@@ -312,7 +303,6 @@ function Handler:basicwash()
 
     ClearAllPedProps(cache.ped)
     ClearPedTasks(cache.ped)
-    LocalPlayer.state:set("inv_busy", false, true)
 
     return success
 end
