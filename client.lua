@@ -74,15 +74,10 @@ local function startThread(vehicle)
 
             -- Prevent rotation controls while flipped/airborne
             if Settings.regulated[class] and not Settings.exclusions[model] then
-                local roll, airborne = 0.0, false
+                local offWheels = not IsVehicleOnAllWheels(vehicle)
+                local flipped = offWheels and math.abs(GetEntityRoll(vehicle)) > 75.0
 
-                if speed < 2.0 then
-                    roll = GetEntityRoll(vehicle)
-                else
-                    airborne = IsEntityInAir(vehicle)
-                end
-
-                if (roll > 75.0 or roll < -75.0) or airborne then
+                if flipped or IsEntityInAir(vehicle) then
                     if Handler:canControl() then
                         Handler:setControl(false)
 
