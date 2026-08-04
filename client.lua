@@ -24,7 +24,8 @@ local function startThread(vehicle)
             -- Retrieve latest vehicle data
             local engine, body = Handler:setData({
                 ['engine'] = GetVehicleEngineHealth(vehicle),
-                ['body'] = GetVehicleBodyHealth(vehicle)
+                ['body'] = GetVehicleBodyHealth(vehicle),
+                ['speed'] = GetEntitySpeed(vehicle) * Units
             })
 
             -- Prevent negative engine health & driveability handler (engine)
