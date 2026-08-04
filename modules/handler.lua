@@ -106,7 +106,7 @@ function Handler:setActive(state)
             self.private.class = false
             self.private.model = false
             self.private.electric = false
-            self.private.data = {['engine'] = 0, ['body'] = 0, ['speed'] = 0}
+            self.private.data = {['engine'] = 0, ['body'] = 0}
         end
     end
 end
@@ -128,18 +128,16 @@ end
 ---@class handlerData
 ---@field engine number
 ---@field body number
----@field speed number
 
 ---@param data handlerData
 ---@return number | nil engine
 ---@return number |nil body
----@return number | nil speed
 function Handler:setData(data)
     if data == nil or type(data) ~= 'table' then return end
 
     self.private.data = data
 
-    return data['engine'], data['body'], data['speed']
+    return data['engine'], data['body']
 end
 
 ---@param vehicle number

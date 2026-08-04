@@ -22,10 +22,9 @@ local function startThread(vehicle)
         while (cache.vehicle == vehicle) and (cache.seat == -1) do
 
             -- Retrieve latest vehicle data
-            local engine, body, speed = Handler:setData({
+            local engine, body = Handler:setData({
                 ['engine'] = GetVehicleEngineHealth(vehicle),
-                ['body'] = GetVehicleBodyHealth(vehicle),
-                ['speed'] = GetEntitySpeed(vehicle) * Units
+                ['body'] = GetVehicleBodyHealth(vehicle)
             })
 
             -- Prevent negative engine health & driveability handler (engine)
