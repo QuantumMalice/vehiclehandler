@@ -6,7 +6,7 @@ return {
         speed  = 50.0,          -- Speed difference needed to break off wheel (LastSpeed - CurrentSpeed)
         heavy  = 90.0,          -- Speed difference needed to disable vehicle instantly (LastSpeed - CurrentSpeed)
     },
-    globalmultiplier = 20.0,    -- Base damage multiplier for all vehicles (lower value = less damage)
+    globalmultiplier = 10.0,    -- Base damage multiplier for all vehicles (lower value = less damage)
     classmultiplier = {         -- Add-on damage multiplier for vehicle classes
         [0] =   1.0,            -- 0: Compacts
                 1.0,            -- 1: Sedans
