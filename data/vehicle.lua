@@ -11,24 +11,24 @@ return {
         [0] =   1.0,            -- 0: Compacts
                 1.0,            -- 1: Sedans
                 1.0,	        -- 2: SUVs
-                0.95,	        -- 3: Coupes
+                1.0,	        -- 3: Coupes
                 1.0,	        -- 4: Muscle
-                0.95,           -- 5: Sports Classics
-                0.95,	        -- 6: Sports
-                0.95,	        -- 7: Super
-                0.47,	        -- 8: Motorcycles
-                0.7,	        -- 9: Off-road
-                0.25,	        -- 10: Industrial
-                0.35,	        -- 11: Utility
-                0.85,	        -- 12: Vans
+                1.0,           -- 5: Sports Classics
+                1.0,	        -- 6: Sports
+                1.0,	        -- 7: Super
+                1.0,	        -- 8: Motorcycles
+                1.0,	        -- 9: Off-road
+                1.0,	        -- 10: Industrial
+                1.0,	        -- 11: Utility
+                1.0,	        -- 12: Vans
                 1.0,	        -- 13: Bicycles
-                0.4,	        -- 14: Boats
-                0.7,	        -- 15: Helicopters
-                0.7,	        -- 16: Planes
-                0.75,	        -- 17: Service
-                0.35,	        -- 18: Emergency
-                0.27,	        -- 19: Military
-                0.43,	        -- 20: Commercial
+                1.0,	        -- 14: Boats
+                1.0,	        -- 15: Helicopters
+                1.0,	        -- 16: Planes
+                1.0,	        -- 17: Service
+                1.0,	        -- 18: Emergency
+                1.0,	        -- 19: Military
+                1.0,	        -- 20: Commercial
                 0.1,	        -- 21: Trains
                 1.0,	        -- 22: Open Wheel
     },
