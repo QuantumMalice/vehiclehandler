@@ -168,14 +168,42 @@ end)
 
 ---@return boolean | nil success
 lib.callback.register('vehiclehandler:adminfix', function()
-    if not Handler or not Handler:isActive() then return end
+    if not Handler then return end -- any seat; adminfix checks for a vehicle and the command.fix ace
     return Handler:adminfix()
 end)
 
 ---@return boolean | nil success
 lib.callback.register('vehiclehandler:adminwash', function()
-    if not Handler or not Handler:isActive() then return end
+    if not Handler then return end -- any seat; adminwash checks for a vehicle and the command.wash ace
     return Handler:adminwash()
+end)
+
+---Sent by the server's /fix and /wash to whoever owns the vehicle, so the change syncs to everyone
+---@param netId number
+---@return number? vehicle
+local function getOwnedVehicle(netId)
+    if GetInvokingResource() then return end -- only the server may send these
+    if not Handler or type(netId) ~= 'number' or not NetworkDoesNetworkIdExist(netId) then return end
+
+    local vehicle <const> = NetToVeh(netId)
+    if vehicle == 0 or not DoesEntityExist(vehicle) then return end
+
+    return vehicle
+end
+
+RegisterNetEvent('vehiclehandler:client:applyFix', function(netId)
+    local vehicle <const> = getOwnedVehicle(netId)
+    if vehicle then Handler:applyFix(vehicle) end
+end)
+
+RegisterNetEvent('vehiclehandler:client:applyWash', function(netId)
+    local vehicle <const> = getOwnedVehicle(netId)
+    if vehicle then Handler:applyWash(vehicle) end
+end)
+
+RegisterNetEvent('vehiclehandler:client:applyFuel', function(netId, level)
+    local vehicle <const> = getOwnedVehicle(netId)
+    if vehicle and type(level) == 'number' then Handler:applyFuel(vehicle, lib.math.clamp(level, 0.0, 100.0) + 0.0) end
 end)
 
 ---@param newlevel number

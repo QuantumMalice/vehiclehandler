@@ -306,6 +306,34 @@ function Handler:basicwash()
     return success
 end
 
+---Repair and refuel a vehicle. Only syncs to other players when run on the vehicle's owner.
+---@param vehicle number
+function Handler:applyFix(vehicle)
+    lib.callback('vehiclehandler:sync', false, function()
+        SetVehicleFixed(vehicle)
+        ResetVehicleWheels(vehicle, true)
+
+        if self:isFuelOx() then
+            Entity(vehicle).state.fuel = 100.0
+        end
+
+        SetVehicleFuelLevel(vehicle, 100.0)
+        DecorSetFloat(vehicle, '_FUEL_LEVEL', GetVehicleFuelLevel(vehicle))
+
+        SetVehicleUndriveable(vehicle, false)
+        SetVehicleEngineOn(vehicle, true, true, true)
+    end)
+end
+
+---Clean a vehicle. Only syncs to other players when run on the vehicle's owner.
+---@param vehicle number
+function Handler:applyWash(vehicle)
+    lib.callback('vehiclehandler:sync', false, function()
+        SetVehicleDirtLevel(vehicle, 0.0)
+        WashDecalsFromVehicle(vehicle, 1.0)
+    end)
+end
+
 ---@return boolean success
 function Handler:adminfix()
     if not self:isValid() then return false end
@@ -313,20 +341,7 @@ function Handler:adminfix()
     local success = lib.callback.await('ox_lib:checkPlayerAce', false, 'command.fix')
 
     if success then
-        lib.callback('vehiclehandler:sync', false, function()
-            SetVehicleFixed(cache.vehicle)
-            ResetVehicleWheels(cache.vehicle, true)
-
-            if self:isFuelOx() then
-                Entity(cache.vehicle).state.fuel = 100.0
-            end
-
-            SetVehicleFuelLevel(cache.vehicle, 100.0)
-            DecorSetFloat(cache.vehicle, '_FUEL_LEVEL', GetVehicleFuelLevel(cache.vehicle))
-
-            SetVehicleUndriveable(cache.vehicle, false)
-            SetVehicleEngineOn(cache.vehicle, true, true, true)
-        end)
+        self:applyFix(cache.vehicle)
     end
 
     return success
@@ -339,10 +354,7 @@ function Handler:adminwash()
     local success = lib.callback.await('ox_lib:checkPlayerAce', false, 'command.wash')
 
     if success then
-        lib.callback('vehiclehandler:sync', false, function()
-            SetVehicleDirtLevel(cache.vehicle, 0.0)
-            WashDecalsFromVehicle(cache.vehicle, 1.0)
-        end)
+        self:applyWash(cache.vehicle)
     end
 
     return success
@@ -357,22 +369,28 @@ function Handler:adminfuel(newlevel)
     local success = lib.callback.await('ox_lib:checkPlayerAce', false, 'command.setfuel')
 
     if success then
-        newlevel = lib.math.clamp(newlevel, 0.0, 100.0) + 0.0
-
-        lib.callback('vehiclehandler:sync', false, function()
-            if self:isFuelOx() then
-                Entity(cache.vehicle).state.fuel = newlevel
-            end
-
-            SetVehicleFuelLevel(cache.vehicle, newlevel)
-            DecorSetFloat(cache.vehicle, '_FUEL_LEVEL', GetVehicleFuelLevel(cache.vehicle))
-
-            SetVehicleUndriveable(cache.vehicle, false)
-            SetVehicleEngineOn(cache.vehicle, true, true, true)
-        end)
+        self:applyFuel(cache.vehicle, lib.math.clamp(newlevel, 0.0, 100.0) + 0.0)
     end
 
     return success
+end
+
+---Set a vehicle's fuel level in this game. Only syncs to other players when run on the vehicle's owner
+---(the server sets ox_fuel's replicated state).
+---@param vehicle number
+---@param newlevel number
+function Handler:applyFuel(vehicle, newlevel)
+    lib.callback('vehiclehandler:sync', false, function()
+        if self:isFuelOx() then
+            Entity(vehicle).state.fuel = newlevel
+        end
+
+        SetVehicleFuelLevel(vehicle, newlevel)
+        DecorSetFloat(vehicle, '_FUEL_LEVEL', GetVehicleFuelLevel(vehicle))
+
+        SetVehicleUndriveable(vehicle, false)
+        SetVehicleEngineOn(vehicle, true, true, true)
+    end)
 end
 
 return Handler
