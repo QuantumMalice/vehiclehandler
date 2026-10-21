@@ -218,7 +218,7 @@ function Handler:fixVehicle(vehicle, coords, fixtype)
         return success
     end
 
-    if fixtype == 'smallkit' and engine >= 500 or fixtype == 'bigkit' and engine >= 1000 then
+    if fixtype == 'smallkit' and engine >= 300 or fixtype == 'bigkit' and engine >= 1000 then
         lib.notify({ title = locale('notify.cannotRepair'), type = 'error' })
         return success
     end
@@ -245,10 +245,10 @@ function Handler:fixVehicle(vehicle, coords, fixtype)
     if success then
         lib.callback('vehiclehandler:sync', false, function()
             if fixtype == 'smallkit' then
-                SetVehicleEngineHealth(vehicle, 500.0)
+                SetVehicleEngineHealth(vehicle, 300.0)
 
-                if GetVehicleBodyHealth(vehicle) < 500 then
-                    SetVehicleBodyHealth(vehicle, 500.0)
+                if GetVehicleBodyHealth(vehicle) < 300 then
+                    SetVehicleBodyHealth(vehicle, 300.0)
                 end
             elseif fixtype == 'bigkit' then
                 SetVehicleFixed(vehicle)
